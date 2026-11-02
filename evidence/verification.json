@@ -1,0 +1,67 @@
+{
+  "stage": "offline-mvp-accepted",
+  "date": "2026-11-02",
+  "build": {
+    "passed": true,
+    "method": "Node.js built-in TypeScript transformer"
+  },
+  "typecheck": {
+    "passed": true,
+    "evidence": "typecheck.json"
+  },
+  "unitTests": {
+    "passed": 22,
+    "failed": 0,
+    "log": "unit-tests.txt"
+  },
+  "artworkAssets": 3,
+  "syntheticDemoPhotos": 6,
+  "realModelInference": {
+    "passed": true,
+    "images": 6,
+    "runtime": "@mediapipe/tasks-vision 1.2.0",
+    "model": "pose_landmarker_full/float16/1",
+    "evidence": "browser/acceptance.json"
+  },
+  "browserQA": {
+    "passed": true,
+    "checks": 36,
+    "evidence": "browser/acceptance.json"
+  },
+  "offlineAcceptance": {
+    "passed": true,
+    "method": "Fresh context and empty browser cache; HTTP/S proxy to unused local port 9, bypassing only localhost; external-origin routes aborted; local CSP connect-src self.",
+    "externalRequests": 0,
+    "evidence": "browser/acceptance.json"
+  },
+  "unpackedDemo": {
+    "passed": true,
+    "checks": 36,
+    "noNodeModules": true,
+    "evidence": "unpacked-browser/acceptance.json"
+  },
+  "documents": {
+    "passed": true,
+    "reportPages": 4,
+    "reportChineseCharacters": 2694,
+    "slides": 12,
+    "editableTextRuns": 152,
+    "evidence": "document-checks.json",
+    "nativePowerPointTested": false
+  },
+  "video": {
+    "passed": true,
+    "duration": 157.92,
+    "width": 1440,
+    "height": 900,
+    "evidence": "video/verification.json"
+  },
+  "humanStudy": {
+    "conducted": false,
+    "claimedLearningEffect": false
+  },
+  "originalFilesPreserved": true,
+  "selfAssessmentScore": 88,
+  "goalComplete": true,
+  "note": "Required deliverables and validation gates passed. See completion-audit.json for evidence and limits."
+}

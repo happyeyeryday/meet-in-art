@@ -1,0 +1,12 @@
+{
+  "os": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "machine": "x86_64",
+  "logicalCPUs": 14,
+  "node": "22.19.0",
+  "browser": "146.0.7680.80",
+  "delegate": "CPU",
+  "runtime": "@mediapipe/tasks-vision 1.2.0",
+  "model": "pose_landmarker_full/float16/1",
+  "timingDefinition": "performance.now() around synchronous landmarker.detect only; excludes init, image decode, UI, and export",
+  "assetsManifest": "../app/public/runtime-manifest.json"
+}

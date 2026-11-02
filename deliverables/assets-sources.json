@@ -1,0 +1,89 @@
+{
+  "artworks": [
+    {
+      "id": "yawning",
+      "file": "app/public/artworks/yawning.jpg",
+      "title": "Self-Portrait, Yawning",
+      "artist": "Joseph Ducreux",
+      "date": "by 1783",
+      "collection": "The J. Paul Getty Museum, 71.PA.56",
+      "rights": "Public-domain original; Getty Open Content reproduction. The 300×390 local teaching copy was obtained through a public mirror that attributes Wikimedia.",
+      "canonical": "https://commons.wikimedia.org/wiki/File:Joseph_Ducreux_-_Self-Portrait,_Yawning_-_71.PA.56_-_J._Paul_Getty_Museum.jpg",
+      "download": "https://github.com/friederikewild/eyewellbeing.com/blob/master/images/page_wiki_treats_yawning_ducreuxyawn.jpg",
+      "gitBlobSha": "89e2d2861dea397d4aed371e0fea7f6ff26cb4a4",
+      "sha256": "5ce164f80493434f31f632d1f533ebfae0c667c4009b18b54793c9802d1da6c8",
+      "metadata": "https://www.getty.edu/cona/CONAFullSubject.aspx?subid=700006262"
+    },
+    {
+      "id": "desperate",
+      "file": "app/public/artworks/desperate.jpg",
+      "title": "Le Désespéré",
+      "artist": "Gustave Courbet",
+      "date": "c.1843–1845",
+      "rights": "Public-domain painting reproduction. CourseAlbum/paintings.tex explicitly identifies this file as public domain and links the Wikimedia original.",
+      "canonical": "https://commons.wikimedia.org/wiki/File:Gustave_Courbet_-_Le_Désespéré_(1843).jpg",
+      "download": "https://github.com/vitalyrepin/Modern2013/blob/master/CourseAlbum/imgs/Gustave_Courbet_-_self_(1843).jpg",
+      "sourceNote": "https://github.com/vitalyrepin/Modern2013/blob/master/CourseAlbum/paintings.tex",
+      "sha256": "25b3d79f5afc6b32ca21c25e22ef49eb3f67054be6d9825146e7b4e55060c9b7"
+    },
+    {
+      "id": "fifer",
+      "file": "app/public/artworks/fifer.jpg",
+      "title": "Le Fifre",
+      "artist": "Édouard Manet",
+      "date": "1866",
+      "collection": "Musée d'Orsay",
+      "rights": "Public-domain painting; local image is a faithful digital reproduction from a public mirror. No game interface or frame is included.",
+      "canonical": "https://www.musee-orsay.fr/fr/oeuvres/le-fifre-709",
+      "download": "https://github.com/fizzypop109/fizzypop109.github.io/blob/master/Images/Art/the-fifer.jpg",
+      "gitBlobSha": "1917163156e1118aa22bd9ed149b6a8c9bb661ac",
+      "sha256": "cbc08bbb9d7649947227c7e7d993b302f686542fbfce255d36ce7b38932a3e25"
+    }
+  ],
+  "software": [
+    {
+      "name": "MediaPipe Pose Landmarker",
+      "license": "Apache-2.0",
+      "source": "https://github.com/google-ai-edge/mediapipe-samples-web",
+      "adaptedFiles": [
+        "src/workers/pose-landmarker.worker.ts",
+        "src/tasks/pose-landmarker.ts",
+        "src/workers/base-worker.ts"
+      ],
+      "note": "Official npm @mediapipe/tasks-vision 1.2.0 installed with lockfile; all runtime assets and official model bundled, SHA-256 recorded in app/public/runtime-manifest.json. All six AI demo images have actual browser inference results."
+    },
+    {
+      "name": "Color Thief",
+      "license": "MIT",
+      "source": "https://github.com/lokesh/color-thief",
+      "note": "Browser synchronous source dependency graph vendored unchanged, except compilation to JavaScript. File manifest in app/licenses/colorthief-source.json."
+    },
+    {
+      "name": "Droid Sans Fallback",
+      "license": "Apache-2.0",
+      "source": "https://android.googlesource.com/platform/frameworks/base/",
+      "note": "Installed font copied for local web/PDF rendering; license preserved in app/licenses/DROID-FONT.txt."
+    },
+    {
+      "name": "DejaVu Sans",
+      "license": "DejaVu / Bitstream Vera font license",
+      "source": "https://dejavu-fonts.github.io/",
+      "note": "Local Latin and symbol font for PDF; license in app/licenses/DEJAVU-FONT.txt."
+    }
+  ],
+  "syntheticImages": {
+    "tool": "built-in image_gen",
+    "count": 6,
+    "participants": "fictional adults",
+    "purpose": "Functional demonstration only; not real participant data or evidence of learning gains.",
+    "prompts": "image-prompts.json"
+  },
+  "models": [
+    {
+      "file": "app/public/models/pose_landmarker_full.task",
+      "url": "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task",
+      "status": "downloaded and validated as ZIP containing pose_detector.tflite and pose_landmarks_detector.tflite; real browser inference passed",
+      "sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1"
+    }
+  ]
+}

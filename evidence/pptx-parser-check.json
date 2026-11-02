@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "parser": "python-pptx 1.0.2",
+  "slides": [
+    {
+      "page": 1,
+      "editableTextBoxes": 11,
+      "shapes": 12,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 2,
+      "editableTextBoxes": 17,
+      "shapes": 17,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 3,
+      "editableTextBoxes": 22,
+      "shapes": 22,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 4,
+      "editableTextBoxes": 15,
+      "shapes": 18,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 5,
+      "editableTextBoxes": 24,
+      "shapes": 24,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 6,
+      "editableTextBoxes": 15,
+      "shapes": 15,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 7,
+      "editableTextBoxes": 12,
+      "shapes": 12,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 8,
+      "editableTextBoxes": 9,
+      "shapes": 11,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 9,
+      "editableTextBoxes": 9,
+      "shapes": 11,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 10,
+      "editableTextBoxes": 12,
+      "shapes": 12,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 11,
+      "editableTextBoxes": 10,
+      "shapes": 10,
+      "title": "把自己放进画里 / 艺术 × AI"
+    },
+    {
+      "page": 12,
+      "editableTextBoxes": 11,
+      "shapes": 11,
+      "title": "把自己放进画里 / 艺术 × AI"
+    }
+  ],
+  "note": "Independent package and editable-content parsing; not a native PowerPoint rendering test."
+}

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "pptxSlides": 12,
+  "editableTextRuns": 152,
+  "pptxXmlAndRelationships": "pass",
+  "independentParser": "pptx-parser-check.json",
+  "pdfRendered": true,
+  "reportChineseCharacters": 2694,
+  "reportTotalCharacters": 3285,
+  "reportPages": 4,
+  "video": "video/verification.json",
+  "visualReview": [
+    "PPT PDF example pages 8–10",
+    "report PDF page 3 and prior pages",
+    "three exported PNG comparisons",
+    "200-character export",
+    "desktop and mobile screenshots",
+    "video frames 30, 100, 114, 150 seconds"
+  ],
+  "powerPointNativeRendering": false
+}

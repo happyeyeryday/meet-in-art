@@ -1,0 +1,27 @@
+# Machine-local settings and credentials
+/.agents/
+/.aws/
+/.codex/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies, generated output and old hand-ins
+node_modules/
+/app/dist/
+__pycache__/
+*.pyc
+*.zip
+/archive/
+/evidence/history/
+/evidence/recording/*.webm
+/evidence/unpacked-browser/*
+!/evidence/unpacked-browser/acceptance.json
+/evidence/release-archives.json
+/deliverables/SHA256SUMS.txt
+test-results/
+playwright-report/
+.DS_Store
+Thumbs.db

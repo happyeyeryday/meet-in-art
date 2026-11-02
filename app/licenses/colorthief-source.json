@@ -1,0 +1,83 @@
+[
+  {
+    "path": "src/sync.ts",
+    "sha": "c489af9f12d03bfa642cab56a936938c03276379",
+    "characters": 6862,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/sync.ts",
+    "localGitBlobSha": "c489af9f12d03bfa642cab56a936938c03276379",
+    "sha256": "7bc945f677d710affad92a6f93a26ccbb8a542024606015769eb7df9fcc653d0",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/types.ts",
+    "sha": "991153b1ec8319b44c3dc9555fe52142edaa0940",
+    "characters": 9355,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/types.ts",
+    "localGitBlobSha": "991153b1ec8319b44c3dc9555fe52142edaa0940",
+    "sha256": "6d0ada7f278e3d82c3e4a2186fb09163c9f78591c33137e8d91492d50c94650d",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/quantizers/mmcq.ts",
+    "sha": "4667a4b7077dab39d4cbbb101dd8117838358845",
+    "characters": 12244,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/quantizers/mmcq.ts",
+    "localGitBlobSha": "4667a4b7077dab39d4cbbb101dd8117838358845",
+    "sha256": "e89ba8d2c59861e140df990ca142318e4508454e621d0d8c2dbe65e867cbed09",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/pipeline.ts",
+    "sha": "d5288f3acbeeb298e7518acc2b517b1d8826cfcc",
+    "characters": 9729,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/pipeline.ts",
+    "localGitBlobSha": "d5288f3acbeeb298e7518acc2b517b1d8826cfcc",
+    "sha256": "e4d4f365c10d7dc6b086b35a8598e9fbfb25f76b340a536e0808797170b4c7f3",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/region.ts",
+    "sha": "7d2ddf95cfc0a885bfbe659b9f93bcf22b72b8f5",
+    "characters": 5131,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/region.ts",
+    "localGitBlobSha": "7d2ddf95cfc0a885bfbe659b9f93bcf22b72b8f5",
+    "sha256": "34e797bc3377ae96b981eca04b608b5352a9a28a08e10c028351a5e2c81df39e",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/swatches.ts",
+    "sha": "b708cd0dca1a742a99b96e98bb69be960b2c5425",
+    "characters": 5479,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/swatches.ts",
+    "localGitBlobSha": "b708cd0dca1a742a99b96e98bb69be960b2c5425",
+    "sha256": "5406303650bf451a051b73175b793d7744357a106fe68968f44a1f6a787ba9a3",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/loaders/canvas-utils.ts",
+    "sha": "41eacd06550b739d3af56b730fbdc5136011b7fc",
+    "characters": 3449,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/loaders/canvas-utils.ts",
+    "localGitBlobSha": "41eacd06550b739d3af56b730fbdc5136011b7fc",
+    "sha256": "dfad08c50fda4678a6350df764e10d46524d1cd4caea84f62c0e4adef1359e46",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/color.ts",
+    "sha": "41e87135f8278dca38e7c294afdf7320b7b777b7",
+    "characters": 6332,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/color.ts",
+    "localGitBlobSha": "41e87135f8278dca38e7c294afdf7320b7b777b7",
+    "sha256": "ee1be49d922e3dc9335630bd1a49f16cb8f1bfe2c3aac68abac4a306792bf0c3",
+    "matchesRecordedUpstream": true
+  },
+  {
+    "path": "src/color-space.ts",
+    "sha": "61647397d644535486a50cb2b646f0c48780d565",
+    "characters": 11159,
+    "source": "https://github.com/lokesh/color-thief/blob/master/src/color-space.ts",
+    "localGitBlobSha": "61647397d644535486a50cb2b646f0c48780d565",
+    "sha256": "ad0ded794d80c3ce72b4cde7925dd93a5f5858308a68c9ccafc5cfb4688a7b7f",
+    "matchesRecordedUpstream": true
+  }
+]

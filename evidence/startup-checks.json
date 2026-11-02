@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "command": "python3 tools/check_startup.py",
+  "platform": "WSL / Linux",
+  "exitCode": 0,
+  "checks": [
+    "fresh source copy without node_modules or dist builds and serves",
+    "second launch reuses dist",
+    "offline copy without source or dependencies serves",
+    "incomplete copy fails with readable error"
+  ],
+  "note": "Local run. Windows launcher is additionally exercised by the GitHub Actions Windows job."
+}

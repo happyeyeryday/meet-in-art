@@ -1,0 +1,22 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {comparePose,mirrorPoints,poseChange,comparePair} from '../src/analysis.ts';
+import type {Points} from '../src/types.ts';
+const frame={width:800,height:1000};
+const p:Points={11:{x:.6,y:.4},12:{x:.4,y:.4},13:{x:.8,y:.5},14:{x:.2,y:.5},15:{x:.65,y:.2},16:{x:.35,y:.2}};
+const transform=(scale:number,dx:number,dy:number):Points=>Object.fromEntries(Object.entries(p).map(([k,v])=>[k,{x:v!.x*scale+dx,y:v!.y*scale+dy}]));
+test('identical points have zero pose error',()=>assert.equal(comparePose(p,frame,p,frame).poseError,0));
+test('translation changes composition, not pose',()=>{const r=comparePose(p,frame,transform(1,.08,.08),frame);assert.ok(r.poseError!<1e-12);assert.ok(Math.abs(r.composition!.dx-.08)<1e-12);assert.ok(r.advice.some(a=>a.title.includes('左')))});
+test('uniform scaling changes apparent size, not pose',()=>{const r=comparePose(p,frame,transform(.7,.15,.15),frame);assert.ok(r.poseError!<1e-12);assert.ok(Math.abs(r.composition!.scaleRatio-.7)<1e-12);assert.ok(r.advice.some(a=>a.title.includes('更大')))});
+test('different aspect ratios preserve physical geometry',()=>{const wide={width:1600,height:1000};const points:Points=Object.fromEntries(Object.entries(p).map(([k,v])=>[k,{x:v!.x/2+.25,y:v!.y}]));assert.ok(comparePose(p,frame,points,wide).poseError!<1e-12)});
+test('lower elbow yields a raise cue',()=>{const points=structuredClone(p);points[13]!.y+=.15;const r=comparePose(p,frame,points,frame);assert.ok(r.poseError!>0);assert.ok(r.advice.some(a=>a.joint===13&&a.title.includes('抬高')))});
+test('unreliable points do not produce false advice',()=>{const points=structuredClone(p);points[13]={x:.8,y:.9,visibility:.1};const r=comparePose(p,frame,points,frame);assert.equal(r.poseError,0);assert.ok(!r.matched.includes(13));assert.ok(!r.advice.some(a=>a.joint===13))});
+test('missing shoulders disable geometry',()=>{const points=structuredClone(p);delete points[11];const r=comparePose(p,frame,points,frame);assert.equal(r.poseError,null);assert.equal(r.composition,null);assert.equal(r.status,'partial')});
+test('insufficient visible arm points do not invent pose result',()=>{const r=comparePose(p,frame,{11:p[11],12:p[12],13:p[13]},frame);assert.equal(r.poseError,null);assert.ok(r.composition)});
+test('mirroring twice restores points and keeps anatomical identity',()=>{const once=mirrorPoints(p);assert.ok(Math.abs(once[11]!.x-.4)<1e-12);const twice=mirrorPoints(once);assert.ok(comparePose(p,frame,twice,frame).poseError!<1e-12)});
+test('out-of-frame / nonfinite points are excluded',()=>{const points=structuredClone(p);points[13]!.x=NaN;points[14]!.x=2;const r=comparePose(p,frame,points,frame);assert.ok(!r.matched.includes(13)&&!r.matched.includes(14));assert.ok(Number.isFinite(r.poseError))});
+test('no divide by zero with coincident shoulders',()=>{const points=structuredClone(p);points[11]={...points[12]!};assert.equal(comparePose(p,frame,points,frame).poseError,null)});
+test('change messages reflect actual results and missing data',()=>{assert.match(poseChange(.5,.2),/更接近/);assert.match(poseChange(.2,.5),/增大/);assert.match(poseChange(null,.1),/不足/)});
+
+test('occluding a mismatched limb cannot claim an improvement',()=>{const first=structuredClone(p);first[15]!.y=.8;const second=structuredClone(first);delete second[15];const result=comparePair(p,frame,{points:first,frame},{points:second,frame});assert.equal(result.first,0);assert.equal(result.second,0);assert.deepEqual(result.joints,[13,14,16]);assert.match(result.summary,/接近$/)});
+test('two individually valid attempts need two shared arm joints',()=>{const first={11:p[11],12:p[12],13:p[13],14:p[14]};const second={11:p[11],12:p[12],15:p[15],16:p[16]};assert.equal(comparePose(p,frame,first,frame).status,'ok');assert.equal(comparePose(p,frame,second,frame).status,'ok');const result=comparePair(p,frame,{points:first,frame},{points:second,frame});assert.equal(result.first,null);assert.equal(result.second,null);assert.match(result.summary,/不足/)});

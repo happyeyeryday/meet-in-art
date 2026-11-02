@@ -1,0 +1,26 @@
+{
+  "name": "meet-in-art",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --experimental-strip-types scripts/test.mjs",
+    "start:demo": "node scripts/start-demo.mjs",
+    "prepare:assets": "node scripts/prepare-assets.mjs",
+    "check:assets": "node scripts/check-assets.mjs",
+    "test:browser": "node scripts/browser-qa.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-vision": "1.2.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "@types/node": "22.19.0",
+    "typescript": "6.0.2"
+  }
+}

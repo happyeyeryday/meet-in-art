@@ -1,0 +1,60 @@
+{
+  "kind": "Continuous live browser recording with explanatory captions; no simulated landmarks or scores",
+  "syntheticPhotos": true,
+  "externalRequests": [],
+  "events": [
+    {
+      "seconds": 0.823,
+      "caption": "入画：选一幅画，拍两次，留下自己的观察。内置照片均为 AI 合成。"
+    },
+    {
+      "seconds": 10.79,
+      "caption": "观察《绝望的人》：手臂的折线、紧凑的取景和浅色衣袖。"
+    },
+    {
+      "seconds": 26.039,
+      "caption": "第一次示例已由本机 MediaPipe 实际识别。青色是照片关键点，黄色是原画人工参考点。"
+    },
+    {
+      "seconds": 39.71,
+      "caption": "建议解释具体的姿态和构图差异。误差单位是肩宽，不是艺术评分。"
+    },
+    {
+      "seconds": 53.971,
+      "caption": "第二次双臂展开。两张照片都重新推理，没有预填分数。"
+    },
+    {
+      "seconds": 71.536,
+      "caption": "标记可以关闭，重新观察照片本身；相似程度只是一个观察线索。"
+    },
+    {
+      "seconds": 81.71,
+      "caption": "主要色块和比例单独比较。可以用日常衣服、道具和背景重新演绎。"
+    },
+    {
+      "seconds": 95.758,
+      "caption": "只比较两次共同可见的关节；记录拍摄想法，并保存到当前浏览器。"
+    },
+    {
+      "seconds": 109.338,
+      "caption": "这是刚刚导出的真实 PNG：原画、两次照片、实测差异和个人说明。"
+    },
+    {
+      "seconds": 124.923,
+      "caption": "刷新后仍能从“我的记录”恢复照片与说明；照片没有上传到服务器。"
+    },
+    {
+      "seconds": 135.84,
+      "caption": "本地恢复完成。清理浏览器数据会删除记录，因此也提供 PNG 和 JSON 导出。"
+    },
+    {
+      "seconds": 146.146,
+      "caption": "三幅画都可离线使用。AI 合成演示不能替代真人试用，也不能证明学习效果。"
+    }
+  ],
+  "completed": true,
+  "browser": "146.0.7680.80",
+  "startedAt": "2026-11-02T06:40:03.784Z",
+  "durationSeconds": 158,
+  "finishedAt": "2026-11-02T06:42:42.677Z"
+}

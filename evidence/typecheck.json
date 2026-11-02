@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "command": "node app/node_modules/typescript/bin/tsc --project app/tsconfig.json --noEmit",
+  "exitCode": 0,
+  "typescript": "6.0.2"
+}

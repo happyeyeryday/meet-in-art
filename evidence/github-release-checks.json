@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "browser": "146.0.7680.80",
+  "checks": [
+    "new page title and visible branding",
+    "original course-version record restores with both photos and reflection",
+    "PNG heading and filename use the new name",
+    "JSON schema and restored record identity remain compatible",
+    "four-character brand fits the 390px mobile viewport"
+  ],
+  "source": "Current build; original course recording JSON seeded into the unchanged IndexedDB database."
+}

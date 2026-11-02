@@ -1,0 +1,16 @@
+{
+  "duration": 157.92,
+  "width": 1440,
+  "height": 900,
+  "decodedFrames": [
+    3,
+    30,
+    60,
+    100,
+    114,
+    130,
+    150
+  ],
+  "method": "Chrome decodes the delivered WebM; screenshots taken after seeked events",
+  "passed": true
+}

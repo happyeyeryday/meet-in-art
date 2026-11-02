@@ -1,0 +1,71 @@
+{
+  "description": "Exact generation/edit prompts extracted from this project task transcript. Source image bytes preserved unchanged.",
+  "images": [
+    {
+      "id": "desperate-after",
+      "file": "app/public/demo/desperate-after.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:32:47.783Z",
+      "prompt": "Create ONE photorealistic educational demo photograph for a Chinese university art recreation project. Inspired by Gustave Courbet's painting The Desperate Man, depict a fictional East Asian male university student, age 22, short dark slightly wavy hair, wearing a loose off-white shirt with wide sleeves, standing in an ordinary dorm room in front of a dark olive brown cloth. Waist-up horizontal photograph, aspect ratio about 1.2:1. His torso faces camera, his intense face looks directly at camera, BOTH hands grip the sides of his head in his hair; BOTH elbows extend out sideways clearly and are raised to near head height, broad angular silhouette, shoulders and elbows and wrists visible without clipping. Similar composition to Courbet: face close to center slightly right, wide sleeves lower corners, large central upper body, wrists at temples. Natural warm side light, ordinary modern clothes and believable room texture, no historical costume, no brush strokes. No text, watermark, border or collage; one single photograph. This is a synthetic demonstration, not a real participant. Keep anatomy plausible and all relevant upper-body joints easy for pose estimation to see.",
+      "transparent_background": false,
+      "referenceImage": null,
+      "sha256": "701849df56953af980242cce815d359df9a14275e636c683d3850dde19ed15c8",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    },
+    {
+      "id": "desperate-before",
+      "file": "app/public/demo/desperate-before.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:33:49.353Z",
+      "prompt": "Edit the supplied photograph to create an EARLIER, less accurate attempt at reenacting Courbet's The Desperate Man. Preserve the exact same fictional adult student, loose off-white shirt, hairstyle, dark olive cloth and dorm room, lighting, camera orientation and realistic photo style. Change the pose only: lower both elbows considerably to chest height, keep his hands at the SIDES of his face/cheeks below the ears rather than gripping his hair, relaxed shoulders. Keep framing and subject size the same. Both elbows and wrists clearly visible with anatomically plausible limbs. One photograph, no text, border, collage or watermark.",
+      "transparent_background": false,
+      "referenceImage": "app/public/demo/desperate-after.png",
+      "sha256": "da41f4131bb841a1d467b1a45c1cfdb36858acb5738a69fcabfbd43bffae1803",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    },
+    {
+      "id": "fifer-after",
+      "file": "app/public/demo/fifer-after.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:33:49.353Z",
+      "prompt": "Create one photorealistic university art reenactment demo photo inspired by Edouard Manet's The Fifer. Full length portrait photo, narrow vertical composition 2:3, one fictional East Asian female university student age 22, short straight black hair, small black cap, black simple jacket with a few gold buttons, bright red straight trousers, black flat shoes, facing the camera with head very slightly to the viewer left. Both feet visible, feet a little apart. She holds a thin simple wooden recorder diagonally near her mouth using both hands, elbows bent in front and slightly apart, wrists clearly visible. Bare warm light grey wall and plain floor in an ordinary room, natural window light. Figure fills about 85 percent of image height, centered. Recognizable contemporary student using everyday clothing and prop, not military uniform or historical costume. Natural photograph with believable anatomy, no painting texture, no text, no watermark, no border, no other people. Educational synthetic demonstration, not a real participant.",
+      "transparent_background": false,
+      "referenceImage": null,
+      "sha256": "7ceda06ffa77a134d4093555bd3b18d5fda7284ecac5415e95fcfe77913cb55b",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    },
+    {
+      "id": "yawning-after",
+      "file": "app/public/demo/yawning-after.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:33:49.353Z",
+      "prompt": "Create one photorealistic university art reenactment demo photo inspired by Joseph Ducreux's Self-Portrait, Yawning (by 1783). One fictional East Asian male university student age 24, slightly curly dark hair, white cloth loosely wrapped on his head like a nightcap, white loose shirt and burgundy red waistcoat, dark blue trousers. Three-quarter length portrait photograph from head to upper thighs. He is yawning with eyes half closed and mouth open, tilts his torso slightly to viewer right. His RIGHT arm on the VIEWER LEFT is bent and raised high so his fist is near the upper left corner with elbow out to the left; his LEFT arm on the VIEWER RIGHT is bent lower, fist near his chest and elbow sticking out right at waist level. Clear asymmetric stretching gesture with both elbows and wrists visible and not clipped. Warm dark brown plain cloth backdrop in an ordinary room, natural window side lighting. Figure fills most of frame, portrait aspect ratio 4:5. Plausible real anatomy and everyday clothing, not a painting. Single photo, no text, watermark, collage or border. Educational synthetic demonstration, not a real participant.",
+      "transparent_background": false,
+      "referenceImage": null,
+      "sha256": "997e1133d2f813773d0ecd060f5f588071f2a5cc3810f61e10f8b0e93781edaa",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    },
+    {
+      "id": "fifer-before",
+      "file": "app/public/demo/fifer-before.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:36:57.377Z",
+      "prompt": "Edit the supplied photograph to create an earlier framing attempt for an educational art-recreation demo. Preserve exactly the same fictional adult woman, face, black cap and jacket, red trousers, shoes, recorder, entire body pose, room, wall, floor, lighting, and portrait aspect ratio. Change ONLY camera framing / distance: take the photograph from about 1.5 times farther away, so her full body is only about 62 percent of image height, and place her noticeably to the viewer RIGHT at x about 62 percent of frame width. Keep all feet and cap in view, much more empty grey wall to the left and above. No text, collage, border or watermark. Natural realistic single photo.",
+      "transparent_background": false,
+      "referenceImage": "app/public/demo/fifer-after.png",
+      "sha256": "956d9af51a404225adc45942efde267a72fd229bb000039491bf85bd80c896c2",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    },
+    {
+      "id": "yawning-before",
+      "file": "app/public/demo/yawning-before.png",
+      "tool": "built-in image_gen",
+      "timestamp": "2026-11-02T04:36:57.377Z",
+      "prompt": "Edit this photograph to create an earlier less accurate art-recreation attempt. Preserve the exact same fictional adult male student's identity, face, hair, white cloth headwrap, burgundy waistcoat, white shirt, dark blue trousers, brown background, lighting, image size and composition. Change the pose: lower his RIGHT arm (on the VIEWER LEFT) so the elbow is near waist level and his fist is near his upper chest, approximately similar height to his other fist. Keep the other arm (on viewer right) and his yawn similar to the original. Now both elbows are low, no arm raised above the head. Natural realistic anatomy with both elbows and wrists visible. One photo only, no text, watermark or collage.",
+      "transparent_background": false,
+      "referenceImage": "app/public/demo/yawning-after.png",
+      "sha256": "b72cf171e2edfc2a0a6c54a62d8f4b63ecd63ed4da7cd4e512c8008335a023c4",
+      "provenance": "AI-generated fictional adult; not a real research participant"
+    }
+  ]
+}

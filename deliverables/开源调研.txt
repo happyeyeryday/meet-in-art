@@ -1,0 +1,29 @@
+开源调研与复用决策（2026-11-02）
+
+1. Google MediaPipe 官方网页示例
+https://github.com/google-ai-edge/mediapipe-samples-web
+许可：Apache-2.0。
+采用：单图片 Pose Landmarker、Worker、ImageBitmap 传输、CPU 推理、置信度与多人物结果处理的组织方式。
+核对源文件：src/workers/pose-landmarker.worker.ts、src/workers/base-worker.ts、src/tasks/pose-landmarker.ts、copy-wasm.js。
+当前模块 Worker 采用官方 getVisionFileset 中的 forVisionTasks(wasmPath, true)。WASM 资源按照官方脚本解析 npm 导出路径，不假设目录结构。
+固定 npm 版本 1.2.0，模型 pose_landmarker_full/float16/1；已完成下载、归档哈希，并在三组共六张示例上通过真实浏览器推理。
+官方使用文档：https://developers.google.com/edge/mediapipe/solutions/vision/pose_landmarker/web_js
+包版本与隐私说明：https://www.npmjs.com/package/@mediapipe/tasks-vision
+新版说明包含使用指标行为；本项目通过本地服务的同源连接策略阻断外部连接，真实浏览器验收记录中未观察到外部请求。
+
+2. Color Thief
+https://github.com/lokesh/color-thief
+许可：MIT。
+采用：同步浏览器色板提取，九个源文件随包保存，不依赖运行时 CDN。
+检查：九个本地文件的 Git blob SHA 均与获取时的上游内容一致，详见 app/licenses/colorthief-source.json。
+本项目保留白色背景参与比例，避免把原画或衬衣的大面积白色忽略。
+
+3. 布拉格博物馆的姿态模仿项目
+https://github.com/museumofprague/pose_app_2026_ifsa
+用途：体验设计参考。
+未直接复用：调研时未找到明确代码许可证；引用的 app/src/data/paintings.json 没有随仓库提供，部署演示也未能成功访问。
+因此不能把它当作“下载即可用”的完整课程成品，也没有把该项目代码复制到当前源码。
+
+结论
+有现成的底层工具，可以复用；观察卡、人工原画参考点、比较规则、两次拍摄、个人说明、离线保存与课程材料需要围绕本项目实现。
+当前使用真实姿态库接口，不写模拟识别结果。没有以 API 返回示例或人工点冒充照片识别。

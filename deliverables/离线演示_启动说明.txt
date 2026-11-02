@@ -1,0 +1,18 @@
+与画相逢 / MEET IN ART · 离线演示包
+朱昭荣、宋琪语 | 艺术与 AI 课程项目
+
+安装 Node.js 22.19 或更高版本（演示前准备好），使用 Chrome / Edge。
+1. 完整解压压缩包。
+2. Windows：双击 app/start-demo.bat。
+   WSL / Linux / macOS：执行 bash app/start-demo.sh。
+3. 浏览器打开 http://127.0.0.1:4173。
+4. 选择画作，点击“用示例试试”或“载入这幅画的完整示例”，即可运行真实模型。
+终端 Ctrl+C 停止。不要直接打开 dist/index.html。
+
+本包已包含模型、WASM、图片与字体，无需 npm install，无需联网。
+如果端口占用：设置 PORT=4174 后执行 node app/scripts/start-demo.mjs，打开对应地址。
+如提示缺少资源：在 app 目录执行 node scripts/check-assets.mjs --dist，查看文件检查结果，重新完整解压。
+
+照片仅在本机处理。点击保存后写入当前浏览器；清理浏览器数据会删除记录，建议导出 PNG/JSON。
+内置六张照片均为 AI 合成，不代表真人试用或学习效果。
+模型可能受遮挡、衣服和视角影响；几何差异不评价艺术好坏。

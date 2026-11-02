@@ -1,0 +1,143 @@
+Built dist/ using the Node.js TypeScript transformer; no package installation required.
+TAP version 13
+# Subtest: identical points have zero pose error
+ok 1 - identical points have zero pose error
+  ---
+  duration_ms: 48.757585
+  type: 'test'
+  ...
+# Subtest: translation changes composition, not pose
+ok 2 - translation changes composition, not pose
+  ---
+  duration_ms: 55.767268
+  type: 'test'
+  ...
+# Subtest: uniform scaling changes apparent size, not pose
+ok 3 - uniform scaling changes apparent size, not pose
+  ---
+  duration_ms: 0.39982
+  type: 'test'
+  ...
+# Subtest: different aspect ratios preserve physical geometry
+ok 4 - different aspect ratios preserve physical geometry
+  ---
+  duration_ms: 0.196241
+  type: 'test'
+  ...
+# Subtest: lower elbow yields a raise cue
+ok 5 - lower elbow yields a raise cue
+  ---
+  duration_ms: 0.602454
+  type: 'test'
+  ...
+# Subtest: unreliable points do not produce false advice
+ok 6 - unreliable points do not produce false advice
+  ---
+  duration_ms: 11.069747
+  type: 'test'
+  ...
+# Subtest: missing shoulders disable geometry
+ok 7 - missing shoulders disable geometry
+  ---
+  duration_ms: 0.543295
+  type: 'test'
+  ...
+# Subtest: insufficient visible arm points do not invent pose result
+ok 8 - insufficient visible arm points do not invent pose result
+  ---
+  duration_ms: 1.283315
+  type: 'test'
+  ...
+# Subtest: mirroring twice restores points and keeps anatomical identity
+ok 9 - mirroring twice restores points and keeps anatomical identity
+  ---
+  duration_ms: 0.451632
+  type: 'test'
+  ...
+# Subtest: out-of-frame / nonfinite points are excluded
+ok 10 - out-of-frame / nonfinite points are excluded
+  ---
+  duration_ms: 0.302504
+  type: 'test'
+  ...
+# Subtest: no divide by zero with coincident shoulders
+ok 11 - no divide by zero with coincident shoulders
+  ---
+  duration_ms: 0.119149
+  type: 'test'
+  ...
+# Subtest: change messages reflect actual results and missing data
+ok 12 - change messages reflect actual results and missing data
+  ---
+  duration_ms: 0.166881
+  type: 'test'
+  ...
+# Subtest: occluding a mismatched limb cannot claim an improvement
+ok 13 - occluding a mismatched limb cannot claim an improvement
+  ---
+  duration_ms: 1.221397
+  type: 'test'
+  ...
+# Subtest: two individually valid attempts need two shared arm joints
+ok 14 - two individually valid attempts need two shared arm joints
+  ---
+  duration_ms: 0.162724
+  type: 'test'
+  ...
+# Subtest: white background contributes its actual share
+ok 15 - white background contributes its actual share
+  ---
+  duration_ms: 0.703824
+  type: 'test'
+  ...
+# Subtest: single-color images are accepted without inventing five colors
+ok 16 - single-color images are accepted without inventing five colors
+  ---
+  duration_ms: 0.160721
+  type: 'test'
+  ...
+# Subtest: palette proportions sum to one for multicolor data
+ok 17 - palette proportions sum to one for multicolor data
+  ---
+  duration_ms: 3.332246
+  type: 'test'
+  ...
+# Subtest: empty or malformed runtime inventory cannot pass
+ok 18 - empty or malformed runtime inventory cannot pass
+  ---
+  duration_ms: 0.299863
+  type: 'test'
+  ...
+# Subtest: valid inventory shape is accepted without claiming file or inference validation
+ok 19 - valid inventory shape is accepted without claiming file or inference validation
+  ---
+  duration_ms: 0.209181
+  type: 'test'
+  ...
+# Subtest: missing model entry and mixed runtime versions are rejected
+ok 20 - missing model entry and mixed runtime versions are rejected
+  ---
+  duration_ms: 0.21459
+  type: 'test'
+  ...
+# Subtest: invalid hashes and lengths do not bypass inventory checking
+ok 21 - invalid hashes and lengths do not bypass inventory checking
+  ---
+  duration_ms: 0.090505
+  type: 'test'
+  ...
+# Subtest: duplicate and escaping resource paths are rejected
+ok 22 - duplicate and escaping resource paths are rejected
+  ---
+  duration_ms: 0.132437
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138.682904
