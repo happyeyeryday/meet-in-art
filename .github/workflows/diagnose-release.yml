@@ -1,0 +1,26 @@
+name: Inspect release failure
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/diagnose-release.yml]
+permissions:
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Inspect failed publication log
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh run view 41414531868 --repo "$GITHUB_REPOSITORY" --log-failed > "$RUNNER_TEMP/release-failure.log"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          folder = Path(os.environ['RUNNER_TEMP'])
+          lines = (folder / 'release-failure.log').read_text().splitlines()
+          detail = '\n'.join(lines[-45:])
+          escaped = detail.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+          print('::notice title=Publication diagnostic::' + escaped)
+          PY
