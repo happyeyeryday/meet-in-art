@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from urllib.parse import urlencode, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = [
@@ -28,12 +29,11 @@ def prepare(destination):
     return [*files, (sums, 'SHA-256 校验值')]
 
 
-def gh(*args, allow_missing=False):
+def gh(*args):
     result = subprocess.run(['gh', *args], capture_output=True, text=True, encoding='utf-8')
     if result.returncode:
-        if allow_missing and 'HTTP 404' in result.stderr:
-            return None
-        raise RuntimeError(result.stderr.strip() or result.stdout.strip() or 'GitHub command failed')
+        detail = result.stderr.strip() or result.stdout.strip() or 'GitHub command failed'
+        raise RuntimeError(f"{' '.join(args[:2])}: {detail}")
     return result.stdout
 
 
@@ -51,24 +51,32 @@ def main():
         return
     repo, tag = os.environ['GITHUB_REPOSITORY'], os.environ['RELEASE_TAG']
     current = find_release(repo, tag)
-    if current is None:
-        gh('release', 'create', tag, '--repo', repo, '--verify-tag', '--draft',
-           '--title', f'与画相逢 {tag}', '--notes-file', str(ROOT / '.github/RELEASE_NOTES.md'))
-        current = find_release(repo, tag)
-        if current is None:
-            raise RuntimeError('已创建草稿，但暂未能读取草稿元数据；可重新运行此发布任务。')
-    elif not current['draft']:
+    if current is not None and not current['draft']:
         raise RuntimeError('该版本已经公开发布，不覆盖已发布的附件；请使用新版本标签。')
-    endpoint = f"repos/{repo}/releases/{current['id']}"
 
     with tempfile.TemporaryDirectory(prefix='meet-in-art-release-') as temporary:
         files = prepare(Path(temporary))
+        if current is None:
+            request = Path(temporary) / 'release.json'
+            request.write_text(json.dumps({'tag_name': tag, 'target_commitish': os.environ.get('GITHUB_SHA', 'main'),
+                'name': f'与画相逢 {tag}', 'draft': True, 'prerelease': False,
+                'body': (ROOT / '.github/RELEASE_NOTES.md').read_text()}, ensure_ascii=False), encoding='utf-8')
+            current = json.loads(gh('api', f'repos/{repo}/releases', '--method', 'POST', '--input', str(request)))
+        # Keep the creation response: draft lookup by tag/name is unreliable.
+        endpoint = f"repos/{repo}/releases/{current['id']}"
+        upload_url = current['upload_url'].split('{', 1)[0]
+        assert urlsplit(upload_url).scheme == 'https' and urlsplit(upload_url).hostname == 'uploads.github.com'
+        print('Created/resuming draft ID:', current['id'], flush=True)
         for path, label in files:
-            # --clobber is restricted to this unpublished draft, allowing a failed
-            # run to resume without ever replacing publicly released artifacts.
+            previous = next((asset for asset in current.get('assets', []) if asset['name'] == path.name), None)
+            if previous is not None:
+                # Only replace an asset in this still-unpublished draft.
+                gh('api', f"repos/{repo}/releases/assets/{previous['id']}", '--method', 'DELETE')
             for attempt in range(3):
                 try:
-                    gh('release', 'upload', tag, f'{path}#{label}', '--repo', repo, '--clobber')
+                    content_type = 'application/zip' if path.suffix == '.zip' else 'text/plain'
+                    gh('api', upload_url + '?' + urlencode({'name': path.name, 'label': label}),
+                       '--method', 'POST', '--header', 'Content-Type: ' + content_type, '--input', str(path))
                     break
                 except RuntimeError:
                     if attempt == 2:
@@ -84,7 +92,9 @@ def main():
             digest = asset.get('digest')
             if digest:
                 assert digest == 'sha256:' + hashlib.sha256(path.read_bytes()).hexdigest(), path.name
-        gh('release', 'edit', tag, '--repo', repo, '--draft=false', '--latest')
+        request = Path(temporary) / 'publish.json'
+        request.write_text(json.dumps({'draft': False, 'tag_name': tag, 'make_latest': 'true'}))
+        gh('api', endpoint, '--method', 'PATCH', '--input', str(request))
         print(f'Published: https://github.com/{repo}/releases/tag/{tag}')
 
 
