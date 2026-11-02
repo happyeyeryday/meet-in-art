@@ -59,12 +59,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.ref_name }}
-        run: |
-          gh release create "$RELEASE_TAG" \
-            "deliverables/入画_离线演示包.zip" \
-            "deliverables/名画仿拍_完整结课包.zip" \
-            "deliverables/SHA256SUMS.txt" \
-            --repo "$GITHUB_REPOSITORY" \
-            --verify-tag \
-            --title "与画相逢 $RELEASE_TAG" \
-            --notes-file .github/RELEASE_NOTES.md
+        run: python tools/publish_release.py

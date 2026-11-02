@@ -3,6 +3,7 @@
 
 GitHub：https://github.com/happyeyeryday/meet-in-art
 下载包：https://github.com/happyeyeryday/meet-in-art/releases/latest
+GitHub 下载名：meet-in-art-demo.zip（离线演示包）、meet-in-art-course.zip（完整结课包）。包内中文目录不变。
 详细图文说明见 README.md。
 原题名“把自己放进画里”和旧网页名“入画”指同一项目；课程报告、PPT、视频保留原题名。
 
