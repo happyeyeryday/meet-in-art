@@ -37,19 +37,29 @@ def gh(*args, allow_missing=False):
     return result.stdout
 
 
+def find_release(repo, tag):
+    # The /releases/tags/{tag} endpoint only returns published releases.
+    # Authenticated release listings include drafts; use their numeric IDs.
+    pages = json.loads(gh('api', f'repos/{repo}/releases?per_page=100', '--paginate', '--slurp'))
+    return next((release for page in pages for release in page if release['tag_name'] == tag), None)
+
+
 def main():
     if len(sys.argv) == 3 and sys.argv[1] == '--prepare-only':
         for path, _ in prepare(Path(sys.argv[2])):
             print(path.name, path.stat().st_size)
         return
     repo, tag = os.environ['GITHUB_REPOSITORY'], os.environ['RELEASE_TAG']
-    endpoint = f'repos/{repo}/releases/tags/{tag}'
-    current = gh('api', endpoint, allow_missing=True)
+    current = find_release(repo, tag)
     if current is None:
         gh('release', 'create', tag, '--repo', repo, '--verify-tag', '--draft',
            '--title', f'与画相逢 {tag}', '--notes-file', str(ROOT / '.github/RELEASE_NOTES.md'))
-    elif not json.loads(current)['draft']:
+        current = find_release(repo, tag)
+        if current is None:
+            raise RuntimeError('已创建草稿，但暂未能读取草稿元数据；可重新运行此发布任务。')
+    elif not current['draft']:
         raise RuntimeError('该版本已经公开发布，不覆盖已发布的附件；请使用新版本标签。')
+    endpoint = f"repos/{repo}/releases/{current['id']}"
 
     with tempfile.TemporaryDirectory(prefix='meet-in-art-release-') as temporary:
         files = prepare(Path(temporary))
