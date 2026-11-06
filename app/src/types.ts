@@ -5,7 +5,9 @@ export interface Artwork {
   id: string; title: string; englishTitle: string; artist: string; year: string;
   image: string; source: string; imageSource: string; license: string;
   focus: string; observation: string; observations: string[]; props: string[];
-  reference: Points; frame: Frame; demo: [string, string];
+  reference: Points; frame: Frame; demo?: [string, string];
+  country?: string; level?: 1 | 2 | 3; people?: string; museum?: string;
+  annotated?: boolean;
 }
 export interface Swatch { hex: string; proportion: number }
 export interface Advice { kind: 'pose' | 'composition'; title: string; detail: string; joint?: number; magnitude: number }
@@ -23,4 +25,8 @@ export interface Attempt {
 export interface ComparisonSession {
   schemaVersion: 1; id: string; artworkId: string; attempts: [Attempt | null, Attempt | null];
   reflection: string; savedAt: string; modelVersion: string; algorithmVersion: string;
+}
+export interface Country {
+  id: string; name: string; zh: string; flag: string; region: string; era: string;
+  desc: string; artists: string; dot: { x: number; y: number };
 }
