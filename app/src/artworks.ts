@@ -1,59 +1,83 @@
 import type { Artwork } from './types.ts';
 
-/* 20 幅可仿拍作品：5 个国家 × 4 幅。
-   reference 暂未标注，标注后会启用姿态对比；image 指向 public/artworks/<id>.jpg。 */
+/* 按时期组织的人物画：每个时期 3–5 幅，地点 id 与 countries.ts 对应 */
 const blank = { reference: {}, frame: { width: 1, height: 1 }, annotated: false };
 
 export const artworks: Artwork[] = [
-  /* ---------------- 法国 ---------------- */
+  /* ---------- 01 远古与古典 ---------- */
   {
-    id: 'liberty', title: '自由引导人民', englishTitle: 'Liberty Leading the People',
-    artist: '欧仁·德拉克洛瓦', year: '1830', country: 'france', level: 3, people: '3–6 人',
-    image: '/artworks/liberty.jpg', museum: '卢浮宫',
-    source: 'https://www.louvre.fr/en/explore/the-palace/liberty-leading-the-people',
-    imageSource: 'https://en.wikipedia.org/wiki/Liberty_Leading_the_People', license: '原作公版；数字图来源见链接。',
-    focus: '旗帜的方向，如何把一群人拧成一股力',
-    observation: '七月革命的街垒上，自由女神举旗前行，市民与倒地者在烟雾里交错。',
-    observations: ['三角形构图：从旗帜顶端到前景的躯体形成稳定的三角。', '光从左上打下，脸与肩最亮。', '红白蓝三色反复出现，把视线拉向旗帜。'],
-    props: ['旗帜', '旧衬衫或马甲', '木杆'], ...blank
+    id: 'fayum', title: '法尤姆木乃伊肖像', englishTitle: 'Fayum Mummy Portrait',
+    artist: '佚名', year: '约 1–3 世纪', country: 'egypt-e1', level: 1, people: '1 人',
+    image: '/artworks/fayum.jpg', museum: '多馆藏',
+    source: 'https://en.wikipedia.org/wiki/Fayum_mummy_portraits',
+    imageSource: 'https://en.wikipedia.org/wiki/Fayum_mummy_portraits', license: '原作公版；数字图来源见链接。',
+    focus: '一双直视的眼睛，如何让逝者留在人间',
+    observation: '木板上的一张脸，眼睛睁得很大，像是从两千年前看过来。',
+    observations: ['正面构图，头部占据画面绝大部分。', '眼睛被刻意放大，是整张脸的焦点。', '金色与深色形成强烈对比，像圣像也像活人。'],
+    props: ['深色头巾', '亚麻布', '金色背景板'], ...blank
   },
   {
-    id: 'recamier', title: '雷卡米埃夫人像', englishTitle: 'Portrait of Madame Récamier',
-    artist: '雅克-路易·大卫', year: '1800', country: 'france', level: 2, people: '1 人',
-    image: '/artworks/recamier.jpg', museum: '卢浮宫',
-    source: 'https://www.louvre.fr/', imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_Madame_R%C3%A9camier',
-    license: '原作公版；数字图来源见链接。',
-    focus: '一条斜线，如何让静止的身体也流动',
-    observation: '沙龙女主人斜倚长榻，用最少的动作完成了一次肖像革命。',
-    observations: ['长榻的弧线与身体形成平行线。', '几乎没有背景，光从左侧铺满白裙。', '回望的眼神是画面唯一的方向感。'],
-    props: ['白色长裙', '躺椅／沙发', '烛台'], ...blank
+    id: 'pompeii', title: '庞贝壁画人物', englishTitle: 'Pompeii Fresco Figure',
+    artist: '佚名', year: '约 1 世纪', country: 'rome-e1', level: 2, people: '1–2 人',
+    image: '/artworks/pompeii.jpg', museum: '庞贝古城',
+    source: 'https://en.wikipedia.org/wiki/Pompeii',
+    imageSource: 'https://en.wikipedia.org/wiki/Pompeii', license: '原作公版；数字图来源见链接。',
+    focus: '侧身与手势，如何讲一个神话瞬间',
+    observation: '墙面上的一个人物，身体转向一侧，手势停在半空。',
+    observations: ['人物多取侧面或四分之三侧，动作明确。', '背景是平涂的色块，人物像被剪下来贴在墙上。', '衣褶用线勾勒，颜色朴素。'],
+    props: ['单色披布', '陶罐', '素色背景墙'], ...blank
   },
   {
-    id: 'moulin', title: '煎饼磨坊的舞会', englishTitle: 'Bal du moulin de la Galette',
-    artist: '皮埃尔-奥古斯特·雷诺阿', year: '1876', country: 'france', level: 3, people: '3–8 人',
-    image: '/artworks/moulin.jpg', museum: '奥赛博物馆',
-    source: 'https://www.musee-orsay.fr/fr/oeuvres/bal-du-moulin-de-la-galette-1152',
-    imageSource: 'https://en.wikipedia.org/wiki/Bal_du_moulin_de_la_Galette', license: '原作公版；数字图来源见链接。',
-    focus: '树荫下的光斑，怎样落在人身上',
-    observation: '蒙马特的露天舞会，阳光穿过树叶，落在跳舞的人身上。',
-    observations: ['光斑像碎片一样落在衣服和脸上。', '近景清晰、远景虚化，形成空气感。', '人物不看镜头，各自沉浸。'],
-    props: ['草帽', '长裙', '长椅'], ...blank
+    id: 'terracotta', title: '秦始皇兵马俑', englishTitle: 'Terracotta Army',
+    artist: '佚名', year: '秦代', country: 'china-e1', level: 1, people: '1 人',
+    image: '/artworks/terracotta.jpg', museum: '秦始皇陵博物院',
+    source: 'https://en.wikipedia.org/wiki/Terracotta_Army',
+    imageSource: 'https://en.wikipedia.org/wiki/Terracotta_Army', license: '原作公版；数字图来源见链接。',
+    focus: '站姿与铠甲，如何撑起一个人的威严',
+    observation: '一个陶土士兵正面站着，发髻、铠甲和手势都被仔细区分。',
+    observations: ['站姿笔直，重心平均落在两脚之间。', '铠甲与发髻是身份线索。', '面部各不相同，但都朝同一个方向。'],
+    props: ['深色外套', '发髻或帽子', '长棍'], ...blank
+  },
+
+  /* ---------- 02 中古 ---------- */
+  {
+    id: 'theodora', title: '狄奥多拉皇后马赛克', englishTitle: 'Empress Theodora',
+    artist: '佚名', year: '约 547', country: 'byzantium-e2', level: 2, people: '1–3 人',
+    image: '/artworks/theodora.jpg', museum: '拉文纳圣维塔莱教堂',
+    source: 'https://en.wikipedia.org/wiki/Basilica_of_San_Vitale',
+    imageSource: 'https://en.wikipedia.org/wiki/Basilica_of_San_Vitale', license: '原作公版；数字图来源见链接。',
+    focus: '正面与金色，如何把权力变成神圣',
+    observation: '皇后正面站立，金色背景把人和现实隔开。',
+    observations: ['人物正面站立，视线不与人交流。', '金色背景营造非现实空间。', '服饰与随从的大小体现等级。'],
+    props: ['金色背景布', '深紫披风', '头冠'], ...blank
   },
   {
-    id: 'olympia', title: '奥林匹亚', englishTitle: 'Olympia',
-    artist: '爱德华·马奈', year: '1863', country: 'france', level: 2, people: '1–2 人',
-    image: '/artworks/olympia.jpg', museum: '奥赛博物馆',
-    source: 'https://www.musee-orsay.fr/fr/oeuvres/olympia-707',
-    imageSource: 'https://en.wikipedia.org/wiki/Olympia_(Manet)', license: '原作公版；数字图来源见链接。',
-    focus: '直视镜头的目光，如何改变观看的关系',
-    observation: '一位巴黎女性直视观众，把古典的维纳斯换成了现实里的人。',
-    observations: ['视线直白，拒绝被观看的顺从。', '黑色背景与浅色身体形成强对比。', '花束、黑猫、侍女三个细节各有暗示。'],
-    props: ['深色靠垫', '花束', '黑猫玩偶'], ...blank
+    id: 'emperors', title: '历代帝王图', englishTitle: 'Thirteen Emperors Scroll',
+    artist: '阎立本（传）', year: '唐', country: 'china-e2', level: 3, people: '3–6 人',
+    image: '/artworks/emperors.jpg', museum: '波士顿美术馆',
+    source: 'https://www.mfa.org/',
+    imageSource: 'https://en.wikipedia.org/wiki/Thirteen_Emperors_Scroll', license: '原作公版；数字图来源见链接。',
+    focus: '端坐与笏板，如何排出一列等级',
+    observation: '一排帝王端坐，宽袖垂落，每人手里都有一块笏板。',
+    observations: ['人物横向排列，座次即等级。', '宽袖与冠冕用线描出层次。', '面部刻画克制，靠服饰区分身份。'],
+    props: ['宽袖长袍', '笏板', '深色座椅'], ...blank
   },
-  /* ---------------- 意大利 ---------------- */
+  {
+    id: 'shunoku', title: '春屋妙葩像', englishTitle: "Portrait of Shun'oku Myōha",
+    artist: '佚名', year: '14 世纪', country: 'japan-e2', level: 1, people: '1 人',
+    image: '/artworks/shunoku.jpg', museum: '京都妙智院',
+    source: 'https://en.wikipedia.org/wiki/Shun%27oku_My%C5%8Dha',
+    imageSource: 'https://en.wikipedia.org/wiki/Shun%27oku_My%C5%8Dha', license: '原作公版；数字图来源见链接。',
+    focus: '正面端坐，如何画出精神气质',
+    observation: '僧人正面端坐，手持法器，衣纹像水一样垂下。',
+    observations: ['正面端坐，身体几乎对称。', '僧服与法器交代身份。', '面部表情安静，强调内在。'],
+    props: ['深色僧袍', '法器或经卷', '素色背景'], ...blank
+  },
+
+  /* ---------- 03 文艺复兴 ---------- */
   {
     id: 'monalisa', title: '蒙娜丽莎', englishTitle: 'Mona Lisa',
-    artist: '列奥纳多·达·芬奇', year: '1503–1519', country: 'italy', level: 2, people: '1 人',
+    artist: '列奥纳多·达·芬奇', year: '1503–1519', country: 'italy-e3', level: 2, people: '1 人',
     image: '/artworks/monalisa.jpg', museum: '卢浮宫',
     source: 'https://www.louvre.fr/en/explore/the-palace/mona-lisa',
     imageSource: 'https://en.wikipedia.org/wiki/Mona_Lisa', license: '原作公版；数字图来源见链接。',
@@ -63,176 +87,380 @@ export const artworks: Artwork[] = [
     props: ['深色上衣', '薄纱', '椅子'], ...blank
   },
   {
-    id: 'ermine', title: '抱银貂的女子', englishTitle: 'Lady with an Ermine',
-    artist: '列奥纳多·达·芬奇', year: '约 1490', country: 'italy', level: 2, people: '1 人',
-    image: '/artworks/ermine.jpg', museum: '恰尔托雷斯基博物馆',
-    source: 'https://pl.wikipedia.org/wiki/Dama_z_gronostajem',
-    imageSource: 'https://en.wikipedia.org/wiki/Lady_with_an_Ermine', license: '原作公版；数字图来源见链接。',
-    focus: '头与身体的反向，如何制造张力',
-    observation: '切奇莉亚怀抱银貂回望，是文艺复兴肖像里最生动的一次转身。',
-    observations: ['头部与身体方向相反，形成张力。', '手部与银貂的毛色彼此呼应。', '光从左上照亮脸与兽毛。'],
-    props: ['白手套', '毛绒玩具', '深色背景布'], ...blank
+    id: 'redturban', title: '戴红头巾的男子', englishTitle: 'Man in a Red Turban',
+    artist: '扬·凡·艾克', year: '1433', country: 'flanders-e3', level: 1, people: '1 人',
+    image: '/artworks/redturban.jpg', museum: '英国国家美术馆',
+    source: 'https://www.nationalgallery.org.uk/paintings/jan-van-eyck-portrait-of-a-man-self-portrait',
+    imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_a_Man_(Self-Portrait%3F)', license: '原作公版；数字图来源见链接。',
+    focus: '直视与红头巾，如何让一张脸成立',
+    observation: '近距离的一张脸，红头巾把视线全部推到眼睛上。',
+    observations: ['正面近距离，几乎没有背景。', '红头巾是画面唯一的强色。', '皮肤与布料的质感被画到极致。'],
+    props: ['红色头巾', '深色外套', '深色背景'], ...blank
   },
   {
-    id: 'primavera', title: '春', englishTitle: 'Primavera',
-    artist: '桑德罗·波提切利', year: '约 1480–1485', country: 'italy', level: 3, people: '3–6 人',
-    image: '/artworks/primavera.jpg', museum: '乌菲齐美术馆',
-    source: 'https://www.uffizi.it/en/artworks/botticelli-spring',
-    imageSource: 'https://en.wikipedia.org/wiki/Primavera_(Botticelli)', license: '原作公版；数字图来源见链接。',
-    focus: '横向的群像，如何像一幅挂毯',
-    observation: '橘园里众神与春神同框，花朵铺满整个画面。',
-    observations: ['横向展开的群像，像一幅挂毯。', '深色树丛把人物推向前景。', '衣褶与花枝的线条极其密集。'],
-    props: ['花环', '浅色长裙', '假花'], ...blank
+    id: 'durer', title: '穿着毛边长袍的自画像', englishTitle: 'Self-Portrait in a Fur-Collared Robe',
+    artist: '阿尔布雷希特·丢勒', year: '1500', country: 'germany-e3', level: 1, people: '1 人',
+    image: '/artworks/durer.jpg', museum: '慕尼黑老绘画陈列馆',
+    source: 'https://www.sammlung.pinakothek.de/',
+    imageSource: 'https://en.wikipedia.org/wiki/Self-Portrait_(D%C3%BCrer,_1500)', license: '原作公版；数字图来源见链接。',
+    focus: '正面与毛边，如何把自己画成圣像',
+    observation: '画家把自己画成正面的、近乎对称的一张圣像。',
+    observations: ['构图近乎对称，像宗教画。', '毛边长袍的质感是重点。', '长发与手势让画面安静下来。'],
+    props: ['深色长袍', '毛边领', '长发'], ...blank
+  },
+
+  /* ---------- 04 巴洛克与古典主义 ---------- */
+  {
+    id: 'innocent', title: '教皇英诺森十世肖像', englishTitle: 'Portrait of Innocent X',
+    artist: '委拉斯开兹', year: '1650', country: 'spain-e4', level: 2, people: '1 人',
+    image: '/artworks/innocent.jpg', museum: '罗马多利亚·潘菲利美术馆',
+    source: 'https://en.wikipedia.org/wiki/Portrait_of_Innocent_X',
+    imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_Innocent_X', license: '原作公版；数字图来源见链接。',
+    focus: '红色与侧目，如何画出权力和警觉',
+    observation: '红衣教皇坐在椅中，眼睛从画面里斜看过来。',
+    observations: ['身体侧转，头部回望，形成张力。', '红色衣袍被集中照明。', '背景深暗，人物像浮出来。'],
+    props: ['红色披肩', '座椅', '深色背景'], ...blank
   },
   {
-    id: 'venus', title: '维纳斯的诞生', englishTitle: 'The Birth of Venus',
-    artist: '桑德罗·波提切利', year: '约 1485', country: 'italy', level: 2, people: '1–3 人',
-    image: '/artworks/venus.jpg', museum: '乌菲齐美术馆',
-    source: 'https://www.uffizi.it/en/artworks/botticelli-birth-of-venus',
-    imageSource: 'https://en.wikipedia.org/wiki/The_Birth_of_Venus', license: '原作公版；数字图来源见链接。',
-    focus: 'S 形的身体，如何站在贝壳上也不倒',
-    observation: '维纳斯从海中诞生，站在贝壳上被风送上岸。',
-    observations: ['人物被放在正中，左右近乎对称。', '头发与布料的线条呈 S 形。', '海面几乎平面化，像装饰。'],
-    props: ['大贝壳（纸板）', '浅色长布', '花瓣'], ...blank
+    id: 'blueboy', title: '蓝衣少年', englishTitle: 'The Blue Boy',
+    artist: '托马斯·庚斯博罗', year: '约 1770', country: 'england-e4', level: 2, people: '1 人',
+    image: '/artworks/blueboy.jpg', museum: '亨廷顿图书馆',
+    source: 'https://www.huntington.org/',
+    imageSource: 'https://en.wikipedia.org/wiki/The_Blue_Boy', license: '原作公版；数字图来源见链接。',
+    focus: '一身蓝，如何站出贵族的气度',
+    observation: '少年全身站立，一手叉腰，蓝色丝绸从画面里发光。',
+    observations: ['全身像，姿态舒展。', '蓝色服装占据视觉中心。', '背景风景压低，衬托人物。'],
+    props: ['蓝色外套', '帽子', '浅色背景'], ...blank
   },
-  /* ---------------- 荷兰 ---------------- */
   {
-    id: 'pearl', title: '戴珍珠耳环的少女', englishTitle: 'Girl with a Pearl Earring',
-    artist: '约翰内斯·维米尔', year: '约 1665', country: 'netherlands', level: 1, people: '1 人',
-    image: '/artworks/pearl.jpg', museum: '毛里茨豪斯',
-    source: 'https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/',
-    imageSource: 'https://en.wikipedia.org/wiki/Girl_with_a_Pearl_Earring', license: '原作公版；数字图来源见链接。',
-    focus: '一次回眸，如何把故事留在画外',
-    observation: '一个回眸，把所有叙事都留在了画外。',
-    observations: ['纯黑背景，没有环境线索。', '珍珠只有两点高光，却足够亮。', '头巾的蓝与披肩的黄互为补色。'],
-    props: ['蓝色头巾', '黄色布', '珍珠耳环'], ...blank
+    id: 'pompadour', title: '蓬巴杜夫人肖像', englishTitle: 'Madame de Pompadour',
+    artist: '弗朗索瓦·布歇', year: '1756', country: 'france-e4', level: 2, people: '1 人',
+    image: '/artworks/pompadour.jpg', museum: '慕尼黑老绘画陈列馆',
+    source: 'https://www.sammlung.pinakothek.de/',
+    imageSource: 'https://en.wikipedia.org/wiki/Madame_de_Pompadour', license: '原作公版；数字图来源见链接。',
+    focus: '柔光与装饰，如何把肖像变成品味',
+    observation: '夫人坐在室内，礼服、书籍和花卉一起构成她的品味。',
+    observations: ['柔和光线让丝绸发光。', '书籍与花卉是身份的注脚。', '姿态放松，身体微微侧转。'],
+    props: ['浅色礼服', '书籍', '花卉'], ...blank
+  },
+  {
+    id: 'xiaozhuang', title: '孝庄文皇后像', englishTitle: 'Portrait of Empress Dowager Xiaozhuang',
+    artist: '佚名', year: '清', country: 'china-e4', level: 1, people: '1 人',
+    image: '/artworks/xiaozhuang.jpg', museum: '故宫博物院',
+    source: 'https://www.dpm.org.cn/',
+    imageSource: 'https://en.wikipedia.org/wiki/Empress_Dowager_Xiaozhuang', license: '原作公版；数字图来源见链接。',
+    focus: '正面端坐，如何用服饰写出礼制',
+    observation: '皇后正面端坐，头饰与礼服把身份一层层堆起来。',
+    observations: ['构图对称，人物居中。', '头饰与珠宝是等级线索。', '背景简洁，突出人物。'],
+    props: ['宫廷礼服', '头饰', '深色背景'], ...blank
+  },
+  {
+    id: 'mughal', title: '莫卧儿宫廷人物肖像', englishTitle: 'Mughal Court Portrait',
+    artist: '佚名', year: '约 17 世纪', country: 'india-e4', level: 1, people: '1 人',
+    image: '/artworks/mughal.jpg', museum: '多馆藏',
+    source: 'https://en.wikipedia.org/wiki/Mughal_painting',
+    imageSource: 'https://en.wikipedia.org/wiki/Mughal_painting', license: '原作公版；数字图来源见链接。',
+    focus: '侧面轮廓与花枝，如何摆出宫廷的等级',
+    observation: '人物侧身站立，手持花朵，背景是细致的花园。',
+    observations: ['侧面或四分之三侧，轮廓清晰。', '珠宝与头巾显示身份。', '背景纹样填满画面。'],
+    props: ['长袍', '头巾', '一朵花'], ...blank
+  },
+
+  /* ---------- 05 近代 ---------- */
+  {
+    id: 'desperate', title: '绝望的人', englishTitle: 'The Desperate Man',
+    artist: '居斯塔夫·库尔贝', year: '约 1843—1845', country: 'france-e5', level: 2, people: '1 人',
+    image: '/artworks/desperate.jpg', museum: '奥赛博物馆',
+    source: 'https://www.musee-orsay.fr/fr/oeuvres/autoportrait-de-lartiste-dit-aussi-desespoir-ou-encore-le-desespere-272956',
+    imageSource: 'https://commons.wikimedia.org/wiki/Category:Le_Désespéré_(Courbet)', license: '原作公版；数字图为原作复制，取得路径见来源清单。',
+    focus: '用双臂围住一个紧张的表情',
+    observation: '试着用手臂在头部周围形成折线，观察肘部离脸多远。画面边缘与手臂之间的距离，同样影响紧张感。',
+    observations: ['双手靠近头发，手肘向两边展开。', '人物上半身占据大部分画面，留白很少。', '浅色衣袖与深色背景对比，让手臂的轮廓更明显。'],
+    props: ['浅色宽松衬衫', '深色背景', '一侧的窗光'],
+    frame: { width: 1500, height: 1228 },
+    reference: { 11: { x: .72, y: .69 }, 12: { x: .28, y: .67 }, 13: { x: .92, y: .45 }, 14: { x: .04, y: .52 }, 15: { x: .565, y: .135 }, 16: { x: .18, y: .355 } },
+    demo: ['/demo/desperate-before.png', '/demo/desperate-after.png'], annotated: true
+  },
+  {
+    id: 'parasol', title: '撑阳伞的女人', englishTitle: 'Woman with a Parasol',
+    artist: '克劳德·莫奈', year: '1875', country: 'france-e5', level: 2, people: '1–2 人',
+    image: '/artworks/parasol.jpg', museum: '华盛顿国家美术馆',
+    source: 'https://www.nga.gov/',
+    imageSource: 'https://en.wikipedia.org/wiki/Woman_with_a_Parasol', license: '原作公版；数字图来源见链接。',
+    focus: '回头的瞬间，如何被光留住',
+    observation: '女子撑伞站在草地上，回头的一瞬被风与光同时抓住。',
+    observations: ['人物身体侧转，头部回望。', '衣裙和面纱在风里飘动。', '天空与草地用松动的笔触铺开。'],
+    props: ['阳伞', '浅色长裙', '草地背景'], ...blank
+  },
+  {
+    id: 'gaoyong', title: '高邕小像', englishTitle: 'Portrait of Gao Yong',
+    artist: '任伯年', year: '1887', country: 'china-e5', level: 1, people: '1 人',
+    image: '/artworks/gaoyong.jpg', museum: '浙江省博物馆',
+    source: 'https://www.zhejiangmuseum.com/',
+    imageSource: 'https://en.wikipedia.org/wiki/Ren_Bonian', license: '原作公版；数字图来源见链接。',
+    focus: '侧影与竹杖，如何用留白写人',
+    observation: '人物侧身拄杖，背景大片留白，只留下轮廓。',
+    observations: ['侧面轮廓，身体微微倚靠。', '衣着朴素，面部刻画细致。', '背景留白，靠线条撑住画面。'],
+    props: ['长衫', '竹杖', '留白背景'], ...blank
+  },
+
+  /* ---------- 06 现代与当代 ---------- */
+  {
+    id: 'soldier', title: '士兵自画像', englishTitle: 'Self-Portrait as a Soldier',
+    artist: '恩斯特·路德维希·基尔希纳', year: '1915', country: 'germany-e6', level: 2, people: '1 人',
+    image: '/artworks/soldier.jpg', museum: '欧柏林艾伦纪念美术馆',
+    source: 'https://allenartcollection.oberlin.edu/',
+    imageSource: 'https://en.wikipedia.org/wiki/Ernst_Ludwig_Kirchner', license: '原作公版；数字图来源见链接。',
+    focus: '变形的身体，如何画出战争的焦虑',
+    observation: '军装里的身体僵硬，脸和手被画得尖锐而变形。',
+    observations: ['姿态僵硬，像被制服固定。', '色彩刺目，形体不协调。', '空荡的手臂暗示失去。'],
+    props: ['军装', '深色背景', '短棍'], ...blank
+  },
+  {
+    id: 'jeanne', title: '珍妮·赫布特尼肖像', englishTitle: 'Portrait of Jeanne Hébuterne',
+    artist: '阿梅代奥·莫迪利亚尼', year: '约 1918', country: 'france-e6', level: 2, people: '1 人',
+    image: '/artworks/jeanne.jpg', museum: '多馆藏',
+    source: 'https://en.wikipedia.org/wiki/Jeanne_H%C3%A9buterne',
+    imageSource: 'https://en.wikipedia.org/wiki/Jeanne_H%C3%A9buterne', license: '原作公版；数字图来源见链接。',
+    focus: '拉长的脖颈，如何把肖像变成气质',
+    observation: '脖颈被拉长，五官简化，整个人安静得近乎忧郁。',
+    observations: ['脖颈与脸被拉长，比例被有意改变。', '五官简化成几条线。', '色彩柔和，背景几乎空。'],
+    props: ['深色上衣', '素色背景', '耳环'], ...blank
+  },
+  {
+    id: 'frida', title: '戴荆棘项链和蜂鸟的自画像', englishTitle: 'Self-Portrait with Thorn Necklace and Hummingbird',
+    artist: '弗里达·卡罗', year: '1940', country: 'mexico-e6', level: 2, people: '1 人',
+    image: '/artworks/frida.jpg', museum: '哈里·兰塞姆中心',
+    source: 'https://www.hrc.utexas.edu/',
+    imageSource: 'https://en.wikipedia.org/wiki/Self-Portrait_with_Thorn_Necklace_and_Hummingbird', license: '原作公版；数字图来源见链接。',
+    focus: '荆棘与蜂鸟，如何把经历戴在身上',
+    observation: '正面半身，荆棘项链、猴子和黑猫把画面填满。',
+    observations: ['正面直视，几乎没有背景空间。', '象征物围绕人物排列。', '绿色与深色形成强对比。'],
+    props: ['深色上衣', '项链', '绿植背景'], ...blank
+  },
+  {
+    id: 'father', title: '父亲', englishTitle: 'Father',
+    artist: '罗中立', year: '1980', country: 'china-e6', level: 1, people: '1 人',
+    image: '/artworks/father.jpg', museum: '中国美术馆',
+    source: 'https://www.namoc.org/',
+    imageSource: 'https://en.wikipedia.org/wiki/Luo_Zhongli', license: '原作版权归艺术家；仅作课程学习使用。',
+    focus: '一张放大的脸，如何让普通人成为纪念碑',
+    observation: '一张老农民的脸被放大到几乎占满画面，手里端着一只茶碗。',
+    observations: ['面部特写，毛孔与皱纹都被画出来。', '茶碗是唯一的道具。', '背景是土地的颜色。'],
+    props: ['白色头巾', '茶碗', '深色背景'], ...blank
+  },
+  {
+    id: 'vase', title: '陶瓶人物画', englishTitle: 'Greek Vase Painting',
+    artist: '佚名', year: '约公元前 6 世纪', country: 'egypt-e1', level: 2, people: '1–2 人',
+    image: '/artworks/vase.jpg', museum: '多馆藏',
+    source: 'https://en.wikipedia.org/wiki/Ancient_Greek_pottery',
+    imageSource: 'https://en.wikipedia.org/wiki/Ancient_Greek_pottery', license: '原作公版；数字图来源见链接。',
+    focus: '黑绘与红绘，如何用剪影讲神话',
+    observation: '陶瓶上的人物是纯色剪影，动作被压成最清楚的轮廓。',
+    observations: ['人物取侧面，动作夸张明确。', '黑绘与红绘靠底色反转。', '瓶身弧面把构图拉长。'],
+    props: ['深色披布', '陶罐', '素色背景'], ...blank
+  },
+  {
+    id: 'christ', title: '西奈山基督圣像', englishTitle: 'Christ Pantocrator of Sinai',
+    artist: '佚名', year: '6 世纪', country: 'byzantium-e2', level: 1, people: '1 人',
+    image: '/artworks/christ.jpg', museum: '圣凯瑟琳修道院',
+    source: 'https://en.wikipedia.org/wiki/Christ_Pantocrator_(Sinai)',
+    imageSource: 'https://en.wikipedia.org/wiki/Christ_Pantocrator_(Sinai)', license: '原作公版；数字图来源见链接。',
+    focus: '正面与不对称的眼神，如何画出神性',
+    observation: '一张正面的脸，两只眼睛却像在看不同的方向。',
+    observations: ['正面构图，头部几乎占满画面。', '金色背景压平空间。', '面部不对称，制造威严感。'],
+    props: ['深色长袍', '金色背景板', '经书'], ...blank
+  },
+  {
+    id: 'kubilai', title: '忽必烈皇后察必像', englishTitle: 'Portrait of Empress Chabi',
+    artist: '佚名', year: '元', country: 'china-e2', level: 1, people: '1 人',
+    image: '/artworks/kubilai.jpg', museum: '故宫博物院',
+    source: 'https://www.dpm.org.cn/',
+    imageSource: 'https://en.wikipedia.org/wiki/Chabi', license: '原作公版；数字图来源见链接。',
+    focus: '头饰与珠宝，如何标出草原皇后的身份',
+    observation: '皇后正面端坐，高高的头饰把身份直接写在头上。',
+    observations: ['正面端坐，构图对称。', '头饰与珠宝是身份核心。', '服饰纹样细密。'],
+    props: ['高头饰', '深色礼服', '素色背景'], ...blank
+  },
+  {
+    id: 'ife', title: '伊费铜合金头像', englishTitle: 'Ife Head',
+    artist: '佚名', year: '12–15 世纪', country: 'westafrica-e2', level: 1, people: '1 人',
+    image: '/artworks/ife.jpg', museum: '大英博物馆等',
+    source: 'https://en.wikipedia.org/wiki/Ife_head',
+    imageSource: 'https://en.wikipedia.org/wiki/Ife_head', license: '原作公版；数字图来源见链接。',
+    focus: '比例与光泽，如何让一张脸安静下来',
+    observation: '一张金属的脸，五官比例克制，表面有柔和的光。',
+    observations: ['正面头像，五官比例协调。', '金属光泽代替了肤色。', '表情平静，几乎不带情绪。'],
+    props: ['深色披布', '素色背景', '金属头饰'], ...blank
+  },
+  {
+    id: 'maya', title: '亚什奇兰 26 号门楣', englishTitle: 'Yaxchilan Lintel 26',
+    artist: '佚名', year: '约 8 世纪', country: 'maya-e2', level: 2, people: '1 人',
+    image: '/artworks/maya.jpg', museum: '墨西哥国家人类学博物馆',
+    source: 'https://en.wikipedia.org/wiki/Yaxchilan',
+    imageSource: 'https://en.wikipedia.org/wiki/Yaxchilan', license: '原作公版；数字图来源见链接。',
+    focus: '侧脸与头饰，如何把人物嵌进仪式',
+    observation: '侧面的人物被复杂的头饰和铭文包围，像一场仪式的一帧。',
+    observations: ['人物取侧面，轮廓清晰。', '头饰与服装极其复杂。', '人物与文字、神灵并置。'],
+    props: ['羽毛头饰', '深色披布', '石质背景'], ...blank
+  },
+  {
+    id: 'urbino', title: '乌尔比诺公爵夫妇肖像', englishTitle: 'Diptych of the Duke and Duchess of Urbino',
+    artist: '皮耶罗·德拉·弗朗切斯卡', year: '约 1473–1475', country: 'italy-e3', level: 2, people: '2 人',
+    image: '/artworks/urbino.jpg', museum: '乌菲齐美术馆',
+    source: 'https://www.uffizi.it/en/artworks',
+    imageSource: 'https://en.wikipedia.org/wiki/Diptych_of_Urbino', license: '原作公版；数字图来源见链接。',
+    focus: '两幅侧脸，如何面对面对话',
+    observation: '公爵与夫人分列两幅画，侧脸相对，背景是同一片山水。',
+    observations: ['双人侧面，视线相对。', '背景山水连续，构图对称。', '服饰与首饰强调贵族身份。'],
+    props: ['深色礼服', '头饰', '山水背景板'], ...blank
+  },
+  {
+    id: 'castiglione', title: '巴尔达萨雷·卡斯蒂廖内肖像', englishTitle: 'Portrait of Baldassare Castiglione',
+    artist: '拉斐尔', year: '约 1514–1515', country: 'italy-e3', level: 1, people: '1 人',
+    image: '/artworks/castiglione.jpg', museum: '卢浮宫',
+    source: 'https://www.louvre.fr/',
+    imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_Baldassare_Castiglione', license: '原作公版；数字图来源见链接。',
+    focus: '半身与交叠的双手，如何画出克制',
+    observation: '人物微微侧身，双手交叠，深色衣服把脸衬得更安静。',
+    observations: ['半身构图，身体略侧。', '双手交叠，动作克制。', '深色服装与浅色背景对比。'],
+    props: ['深色上衣', '帽子', '浅色背景'], ...blank
+  },
+  {
+    id: 'arnolfini', title: '阿尔诺芬尼夫妇像', englishTitle: 'The Arnolfini Portrait',
+    artist: '扬·凡·艾克', year: '1434', country: 'flanders-e3', level: 3, people: '2 人',
+    image: '/artworks/arnolfini.jpg', museum: '英国国家美术馆',
+    source: 'https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait',
+    imageSource: 'https://en.wikipedia.org/wiki/Arnolfini_Portrait', license: '原作公版；数字图来源见链接。',
+    focus: '并肩站立与手势，如何把婚礼变成证词',
+    observation: '夫妻并肩站在室内，一只手举起，镜子里映出见证者。',
+    observations: ['双人全身，并肩站立。', '手势是画面的核心动作。', '镜子、吊灯等物件都有含义。'],
+    props: ['深色长袍', '头巾', '室内背景'], ...blank
+  },
+  {
+    id: 'durer2', title: '自画像', englishTitle: 'Self-Portrait (1498)',
+    artist: '阿尔布雷希特·丢勒', year: '1498', country: 'germany-e3', level: 1, people: '1 人',
+    image: '/artworks/durer2.jpg', museum: '普拉多博物馆',
+    source: 'https://www.museodelprado.es/',
+    imageSource: 'https://en.wikipedia.org/wiki/Self-Portrait_(D%C3%BCrer,_1498)', license: '原作公版；数字图来源见链接。',
+    focus: '窗边的侧身，如何把画家放进风景',
+    observation: '画家坐在窗边，手扶栏杆，窗外是一片阿尔卑斯山。',
+    observations: ['三分之四侧身，身体朝向窗外。', '窗户与远景交代空间。', '服饰与手套显示身份。'],
+    props: ['浅色外套', '手套', '窗景背景'], ...blank
+  },
+  {
+    id: 'meninas', title: '宫娥', englishTitle: 'Las Meninas',
+    artist: '委拉斯开兹', year: '1656', country: 'spain-e4', level: 3, people: '3–6 人',
+    image: '/artworks/meninas.jpg', museum: '普拉多博物馆',
+    source: 'https://www.museodelprado.es/',
+    imageSource: 'https://en.wikipedia.org/wiki/Las_Meninas', license: '原作公版；数字图来源见链接。',
+    focus: '镜面与视线，如何把观看者拉进画里',
+    observation: '小公主站在中间，画家在左侧，镜子里的国王夫妇看着我们。',
+    observations: ['多人分层站立，视线交错。', '镜子把画外的人拉进画面。', '光线从右侧照进来。'],
+    props: ['浅色长裙', '画架', '深色背景'], ...blank
   },
   {
     id: 'nightwatch', title: '夜巡', englishTitle: 'The Night Watch',
-    artist: '伦勃朗', year: '1642', country: 'netherlands', level: 3, people: '4–8 人',
+    artist: '伦勃朗', year: '1642', country: 'netherlands-e4', level: 3, people: '4–8 人',
     image: '/artworks/nightwatch.jpg', museum: '荷兰国立博物馆',
     source: 'https://www.rijksmuseum.nl/en/collection/SK-C-5',
     imageSource: 'https://en.wikipedia.org/wiki/The_Night_Watch', license: '原作公版；数字图来源见链接。',
     focus: '一束光，如何把群像变成舞台',
     observation: '民兵队走出门廊的一瞬，被伦勃朗拍成了一出戏。',
-    observations: ['光集中在队长、副官和小女孩身上。', '人物层层叠叠，制造出队伍的纵深。', '暗部仍能看清布料的质地。'],
+    observations: ['光集中在队长、副官和小女孩身上。', '人物层层叠叠，制造纵深。', '暗部仍能看清布料质地。'],
     props: ['深色外套', '旗杆', '长棍'], ...blank
   },
   {
-    id: 'milkmaid', title: '倒牛奶的女仆', englishTitle: 'The Milkmaid',
-    artist: '约翰内斯·维米尔', year: '约 1658–1660', country: 'netherlands', level: 2, people: '1 人',
-    image: '/artworks/milkmaid.jpg', museum: '荷兰国立博物馆',
-    source: 'https://www.rijksmuseum.nl/en/collection/SK-A-2344',
-    imageSource: 'https://en.wikipedia.org/wiki/The_Milkmaid_(Vermeer)', license: '原作公版；数字图来源见链接。',
-    focus: '窗边的侧光，如何让日常变得安静',
-    observation: '厨房里最普通的动作，被画成了安静的光。',
-    observations: ['光从左上窗子进来，落在手臂与陶罐。', '桌面的面包与布褶极其细致。', '背景墙面斑驳，几乎抽象。'],
-    props: ['陶罐', '白帽', '围裙'], ...blank
+    id: 'charles1', title: '查理一世狩猎像', englishTitle: 'Charles I at the Hunt',
+    artist: '安东尼·凡·戴克', year: '约 1635', country: 'england-e4', level: 2, people: '1 人',
+    image: '/artworks/charles1.jpg', museum: '卢浮宫',
+    source: 'https://www.louvre.fr/',
+    imageSource: 'https://en.wikipedia.org/wiki/Charles_I_at_the_Hunt', license: '原作公版；数字图来源见链接。',
+    focus: '树与马，如何撑起国王的从容',
+    observation: '国王侧身站在树下，马和侍从在旁，风景替他撑住气度。',
+    observations: ['全身像，身体自然侧立。', '树木与远景拉高画面。', '服饰与手套显示身份。'],
+    props: ['深色外套', '手套', '树林背景'], ...blank
   },
   {
-    id: 'jewishbride', title: '犹太新娘', englishTitle: 'The Jewish Bride',
-    artist: '伦勃朗', year: '约 1665–1669', country: 'netherlands', level: 2, people: '2 人',
-    image: '/artworks/jewishbride.jpg', museum: '荷兰国立博物馆',
-    source: 'https://www.rijksmuseum.nl/en/collection/SK-C-216',
-    imageSource: 'https://en.wikipedia.org/wiki/The_Jewish_Bride', license: '原作公版；数字图来源见链接。',
-    focus: '手放在哪里，情感就落在哪里',
-    observation: '一对爱人把手放在心口，胜过任何誓言。',
-    observations: ['手的位置是全画的情感中心。', '金红颜料堆得很厚，像在发光。', '背景几乎融进黑暗。'],
-    props: ['红色披肩', '金色布料'], ...blank
-  },
-  /* ---------------- 日本 ---------------- */
-  {
-    id: 'beauties', title: '当代三美人', englishTitle: 'Three Beauties of the Present Day',
-    artist: '喜多川歌麿', year: '约 1793', country: 'japan', level: 2, people: '3 人',
-    image: '/artworks/beauties.jpg', museum: '波士顿美术馆等',
-    source: 'https://www.mfa.org/',
-    imageSource: 'https://en.wikipedia.org/wiki/Three_Beauties_of_the_Present_Day', license: '原作公版；数字图来源见链接。',
-    focus: '三张脸朝向不同方向，画面就有了风',
-    observation: '三位江户美人同框，各自看向不同方向。',
-    observations: ['三人脸型与发型各不相同。', '衣领的层次是身份线索。', '背景完全空白，靠人物撑住。'],
-    props: ['和服', '发簪', '扇子'], ...blank
+    id: 'strawhat', title: '戴草帽的自画像', englishTitle: 'Self-Portrait in a Straw Hat',
+    artist: '伊丽莎白·维热·勒布伦', year: '1782', country: 'france-e4', level: 1, people: '1 人',
+    image: '/artworks/strawhat.jpg', museum: '英国国家美术馆',
+    source: 'https://www.nationalgallery.org.uk/',
+    imageSource: 'https://en.wikipedia.org/wiki/Self-Portrait_in_a_Straw_Hat', license: '原作公版；数字图来源见链接。',
+    focus: '草帽与调色板，如何把画家画成自己',
+    observation: '女画家戴着草帽，手拿调色板，回头看向观者。',
+    observations: ['半身像，头部微微回望。', '草帽把光线挡在脸上。', '调色板交代画家身份。'],
+    props: ['草帽', '调色板', '浅色背景'], ...blank
   },
   {
-    id: 'sharaku', title: '三代目大谷鬼次饰奴江户兵卫', englishTitle: 'Ōtani Oniji III as Yakko Edobei',
-    artist: '东洲斋写乐', year: '1794', country: 'japan', level: 1, people: '1 人',
-    image: '/artworks/sharaku.jpg', museum: '多处藏',
-    source: 'https://www.mfa.org/', imageSource: 'https://en.wikipedia.org/wiki/T%C5%8Dsh%C5%ABsai_Sharaku',
-    license: '原作公版；数字图来源见链接。',
-    focus: '手指的姿态，比脸更凶',
-    observation: '演员的一个狠表情，被写乐画成了心理肖像。',
-    observations: ['背景是云母黑，人物像浮在暗处。', '手指的姿态比脸更凶。', '衣纹用粗线勾勒。'],
-    props: ['深色和服', '折扇', '夸张表情'], ...blank
+    id: 'lavoisier', title: '拉瓦锡夫妇肖像', englishTitle: 'Portrait of Antoine-Laurent and Marie-Anne Lavoisier',
+    artist: '雅克-路易·大卫', year: '1788', country: 'france-e4', level: 2, people: '2 人',
+    image: '/artworks/lavoisier.jpg', museum: '大都会艺术博物馆',
+    source: 'https://www.metmuseum.org/',
+    imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_Antoine_Laurent_and_Marie_Anne_Lavoisier', license: '原作公版；数字图来源见链接。',
+    focus: '书桌与仪器，如何把职业画进肖像',
+    observation: '丈夫坐在书桌前，妻子站在一侧，桌上摆满科学仪器。',
+    observations: ['双人室内，身体朝向形成互动。', '仪器与文件交代职业。', '光线集中在两人面部与桌面。'],
+    props: ['深色外套', '书桌', '实验仪器'], ...blank
   },
   {
-    id: 'ohisa', title: '高岛屋久', englishTitle: 'Takashima Ohisa',
-    artist: '喜多川歌麿', year: '约 1793', country: 'japan', level: 1, people: '1 人',
-    image: '/artworks/ohisa.jpg', museum: '大都会艺术博物馆',
-    source: 'https://www.metmuseum.org/', imageSource: 'https://en.wikipedia.org/wiki/Takashima_Ohisa',
-    license: '原作公版；数字图来源见链接。',
-    focus: '发型与衣领，如何交代身份',
-    observation: '茶屋少女的日常一瞥，被歌麿画成了理想化的美人。',
-    observations: ['发型结构清楚，是仿拍重点。', '和服纹样与季节有关。', '手部动作小而克制。'],
-    props: ['团扇', '发簪', '和服'], ...blank
+    id: 'ancestor', title: '清代祖先肖像', englishTitle: 'Qing Ancestor Portrait',
+    artist: '佚名', year: '清', country: 'china-e4', level: 1, people: '1 人',
+    image: '/artworks/ancestor.jpg', museum: '多馆藏',
+    source: 'https://en.wikipedia.org/wiki/Ancestor_portrait',
+    imageSource: 'https://en.wikipedia.org/wiki/Ancestor_portrait', license: '原作公版；数字图来源见链接。',
+    focus: '正面端坐，如何让一个人留在家族里',
+    observation: '人物正面端坐，礼服与冠帽一丝不苟，背景几乎空白。',
+    observations: ['构图对称，人物居中。', '服饰与冠帽是身份线索。', '背景简洁，强调面容。'],
+    props: ['正式礼服', '冠帽', '素色背景'], ...blank
   },
   {
-    id: 'snow', title: '雪中伞下的男女', englishTitle: 'Lovers Walking in the Snow',
-    artist: '铃木春信', year: '约 1760 年代', country: 'japan', level: 2, people: '2 人',
-    image: '/artworks/snow.jpg', museum: '大都会艺术博物馆',
-    source: 'https://www.metmuseum.org/', imageSource: 'https://en.wikipedia.org/wiki/Suzuki_Harunobu',
-    license: '原作公版；数字图来源见链接。',
-    focus: '一把伞，如何把两个人围成一个小世界',
-    observation: '雪中一把伞，把两个人变成一个小小的世界。',
-    observations: ['伞面把画面切成上下两层。', '雪用留白表现，不画白颜料。', '两人的步伐是同一节奏。'],
-    props: ['和伞', '和服', '木屐'], ...blank
-  },
-  /* ---------------- 美国 ---------------- */
-  {
-    id: 'gothic', title: '美国哥特式', englishTitle: 'American Gothic',
-    artist: '格兰特·伍德', year: '1930', country: 'usa', level: 1, people: '2 人',
-    image: '/artworks/gothic.jpg', museum: '芝加哥艺术博物馆',
-    source: 'https://www.artic.edu/artworks/6565/american-gothic',
-    imageSource: 'https://en.wikipedia.org/wiki/American_Gothic', license: '原作公版；数字图来源见链接。',
-    focus: '两张不笑的脸，如何撑住一栋房子',
-    observation: '一对衣阿华父女站在自家农舍前，成了美国最著名的面孔。',
-    observations: ['尖拱窗在两人之间重复。', '草叉的三齿与窗框线条呼应。', '表情克制，几乎不笑。'],
-    props: ['草叉', '围裙', '深色外套'], ...blank
+    id: 'charles4', title: '查理四世一家像', englishTitle: 'The Family of Charles IV',
+    artist: '弗朗西斯科·戈雅', year: '1800–1801', country: 'spain-e5', level: 3, people: '6–8 人',
+    image: '/artworks/charles4.jpg', museum: '普拉多博物馆',
+    source: 'https://www.museodelprado.es/',
+    imageSource: 'https://en.wikipedia.org/wiki/Charles_IV_of_Spain_and_His_Family', license: '原作公版；数字图来源见链接。',
+    focus: '一排人，如何画出各自的心思',
+    observation: '王室成员排成一排，服饰华丽，表情却各不相同。',
+    observations: ['多人分层站立，像舞台。', '珠宝与勋章细节丰富。', '人物表情不完全统一。'],
+    props: ['华丽礼服', '勋章', '深色背景'], ...blank
   },
   {
-    id: 'nighthawks', title: '夜游者', englishTitle: 'Nighthawks',
-    artist: '爱德华·霍普', year: '1942', country: 'usa', level: 2, people: '4 人',
-    image: '/artworks/nighthawks.jpg', museum: '芝加哥艺术博物馆',
-    source: 'https://www.artic.edu/artworks/111628/nighthawks',
-    imageSource: 'https://en.wikipedia.org/wiki/Nighthawks', license: '原作公版；数字图来源见链接。',
-    focus: '玻璃把人关在光里，街道却是空的',
-    observation: '深夜的餐馆里，四个人各自沉默。',
-    observations: ['玻璃把人物关在光里，街道是空的。', '荧光灯的绿与室内的黄形成冷对比。', '没有入口，观众只能旁观。'],
-    props: ['吧台', '咖啡杯', '深色帽子'], ...blank
+    id: 'moitessier', title: '莫瓦特西埃夫人', englishTitle: 'Madame Moitessier',
+    artist: '让-奥古斯特-多米尼克·安格尔', year: '1856', country: 'france-e5', level: 2, people: '1 人',
+    image: '/artworks/moitessier.jpg', museum: '英国国家美术馆',
+    source: 'https://www.nationalgallery.org.uk/',
+    imageSource: 'https://en.wikipedia.org/wiki/Madame_Moitessier', license: '原作公版；数字图来源见链接。',
+    focus: '坐姿与轮廓，如何把优雅画成线条',
+    observation: '夫人坐着，身体侧转，脸朝向观者，轮廓干净利落。',
+    observations: ['坐姿，身体与脸方向相反。', '礼服与珠宝细节丰富。', '轮廓线清晰，姿态端庄。'],
+    props: ['华丽礼服', '珠宝', '室内背景'], ...blank
   },
   {
-    id: 'watson', title: '沃森与鲨鱼', englishTitle: 'Watson and the Shark',
-    artist: '约翰·辛格尔顿·科普利', year: '1778', country: 'usa', level: 3, people: '6–8 人',
-    image: '/artworks/watson.jpg', museum: '美国国家美术馆',
-    source: 'https://www.nga.gov/artworks/56937-watson-and-the-shark',
-    imageSource: 'https://en.wikipedia.org/wiki/Watson_and_the_Shark', license: '原作公版；数字图来源见链接。',
-    focus: '所有手臂指向同一个人，紧张就成立了',
-    observation: '少年落水、众人伸手、鲨鱼逼近，一幅画讲完一场营救。',
-    observations: ['所有手臂指向落水者，形成放射线。', '船沿的对角线制造紧张。', '海面颜色从深到浅。'],
-    props: ['纸板小船', '绳子', '蓝色布'], ...blank
+    id: 'vangogh', title: '自画像', englishTitle: 'Self-Portrait (1889)',
+    artist: '文森特·梵高', year: '1889', country: 'france-e5', level: 1, people: '1 人',
+    image: '/artworks/vangogh.jpg', museum: '奥赛博物馆',
+    source: 'https://www.musee-orsay.fr/',
+    imageSource: 'https://en.wikipedia.org/wiki/Self-Portrait_(Van_Gogh,_1889)', license: '原作公版；数字图来源见链接。',
+    focus: '旋转的笔触，如何画出内在情绪',
+    observation: '半身正面，蓝绿色背景像水一样流动，脸的笔触短而急。',
+    observations: ['半身正面，直视观者。', '背景笔触旋转流动。', '面部用短笔触堆出情绪。'],
+    props: ['深色外套', '蓝绿色背景', '帽子'], ...blank
   },
   {
-    id: 'washington', title: '乔治·华盛顿肖像', englishTitle: 'George Washington (Vaughan type)',
-    artist: '吉尔伯特·斯图尔特', year: '1795', country: 'usa', level: 1, people: '1 人',
-    image: '/artworks/washington.jpg', museum: '美国国家肖像馆',
-    source: 'https://npg.si.edu/', imageSource: 'https://en.wikipedia.org/wiki/Gilbert_Stuart',
-    license: '原作公版；数字图来源见链接。',
-    focus: '领巾的一小块白，如何点亮整张脸',
-    observation: '美国国父的标准像，后来被印上了一美元纸币。',
-    observations: ['领巾的褶是画面最亮的白。', '面部略不对称，显得真实。', '背景极暗，突出轮廓。'],
-    props: ['黑色外套', '白领巾', '旧文件'], ...blank
+    id: 'kahnweiler', title: '卡恩韦勒肖像', englishTitle: 'Portrait of Daniel-Henry Kahnweiler',
+    artist: '巴勃罗·毕加索', year: '1910', country: 'france-e6', level: 3, people: '1 人',
+    image: '/artworks/kahnweiler.jpg', museum: '芝加哥艺术博物馆',
+    source: 'https://www.artic.edu/artworks/109275',
+    imageSource: 'https://en.wikipedia.org/wiki/Portrait_of_Daniel-Henry_Kahnweiler', license: '原作版权归艺术家；仅作课程学习使用。',
+    focus: '拆解的脸，如何同时画出多个角度',
+    observation: '人物的轮廓被拆成几何面，脸和身体同时从几个角度出现。',
+    observations: ['形体被分解成几何面。', '正面与侧面同时出现。', '背景与人物互相穿插。'],
+    props: ['深色西装', '素色背景', '几何道具'], ...blank
   }
 ];
 
-/* 内置演示：保留原有的三幅，带真实参考点与示例照片，用于完整流程演示。 */
+/* 内置演示：保留带真实参考点与示例照片的作品，用于完整流程演示 */
 export const demoArtworks: Artwork[] = [
   {
     id: 'yawning', title: '打哈欠的自画像', englishTitle: 'Self-Portrait, Yawning', artist: '约瑟夫·迪克勒', year: '不晚于 1783',
@@ -246,18 +474,6 @@ export const demoArtworks: Artwork[] = [
     frame: { width: 300, height: 390 },
     reference: { 11: { x: .63, y: .49 }, 12: { x: .37, y: .44 }, 13: { x: .85, y: .35 }, 14: { x: .23, y: .24 }, 15: { x: .65, y: .39 }, 16: { x: .13, y: .10 } },
     demo: ['/demo/yawning-before.png', '/demo/yawning-after.png'], country: 'demo', annotated: true
-  },
-  {
-    id: 'desperate', title: '绝望的人', englishTitle: 'The Desperate Man', artist: '居斯塔夫·库尔贝', year: '约 1843—1845',
-    image: '/artworks/desperate.jpg', source: 'https://www.musee-orsay.fr/fr/oeuvres/autoportrait-de-lartiste-dit-aussi-desespoir-ou-encore-le-desespere-272956',
-    imageSource: 'https://commons.wikimedia.org/wiki/Category:Le_Désespéré_(Courbet)', license: '原作公版；数字图为原作复制，取得路径见来源清单。',
-    focus: '用双臂围住一个紧张的表情',
-    observation: '试着用手臂在头部周围形成折线，观察肘部离脸多远。画面边缘与手臂之间的距离，同样影响紧张感。',
-    observations: ['双手靠近头发，手肘向两边展开。', '人物上半身占据大部分画面，留白很少。', '浅色衣袖与深色背景对比，让手臂的轮廓更明显。'],
-    props: ['浅色宽松衬衫', '深色背景', '一侧的窗光'],
-    frame: { width: 1500, height: 1228 },
-    reference: { 11: { x: .72, y: .69 }, 12: { x: .28, y: .67 }, 13: { x: .92, y: .45 }, 14: { x: .04, y: .52 }, 15: { x: .565, y: .135 }, 16: { x: .18, y: .355 } },
-    demo: ['/demo/desperate-before.png', '/demo/desperate-after.png'], country: 'demo', annotated: true
   },
   {
     id: 'fifer', title: '吹笛少年', englishTitle: 'The Fifer', artist: '爱德华·马奈', year: '1866',

@@ -1,5 +1,6 @@
 import {artworks, demoArtworks, allArtworks} from './artworks.ts';
 import {countries} from './countries.ts';
+import {eras, eraOf} from './eras.ts';
 import {WORLD_PATH} from './world.ts';
 import {comparePose, emptyAnalysis, CONNECTIONS, reliable, comparePair, ALGORITHM_VERSION} from './analysis.ts';
 import {decodePhoto, canvasFromUrl, photoBlob} from './images.ts';
@@ -8,15 +9,19 @@ import {detect, MODEL_VERSION} from './detector.ts';
 import {saveSession, listSessions, removeSession} from './storage.ts';
 import {exportPNG, exportJSON} from './export.ts';
 import {openBook} from './book.ts';
-import type {Artwork, Attempt, ComparisonSession, Points, Swatch} from './types.ts';
+import {mountSplash} from './splash.ts';
+import type {Artwork, Attempt, ComparisonSession, Points, Swatch, Extras} from './types.ts';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 type Page = 'explore' | 'studio' | 'passport';
 const initialPage = new URLSearchParams(location.search).get('page');
 let page: Page = initialPage === 'studio' || initialPage === 'passport' ? initialPage : 'explore';
-let countryId = 'france';
+let eraId = 'e1';
+const initialEra = new URLSearchParams(location.search).get('era');
+if (initialEra && eras.some(e => e.id === initialEra)) eraId = initialEra;
+let countryId = countries.find(c => c.eraId === eraId)!.id;
 const initialCountry = new URLSearchParams(location.search).get('country');
-if (initialCountry && countries.some(c => c.id === initialCountry)) countryId = initialCountry;
+if (initialCountry && countries.some(c => c.id === initialCountry && c.eraId === eraId)) countryId = initialCountry;
 let art: Artwork = artworks[0];
 const initialArt = new URLSearchParams(location.search).get('art');
 if (initialArt) {
@@ -25,13 +30,31 @@ if (initialArt) {
 }
 let attempts: [Attempt | null, Attempt | null] = [null, null];
 let reflection = '', active = 0;
-let busy = false, showPoints = true;
+let busy = false, showPoints = true, showGrid = true;
+let aiEnabled = false, aiModel = '';
+const aiTexts: Record<string, string> = {};
+const aiPending = new Set<string>();
 let records: ComparisonSession[] = [];
 let sessionId = crypto.randomUUID();
 let referencePalette: Swatch[] = [];
 let toastTimer: ReturnType<typeof setTimeout>;
 let query = '', levelFilter = 0, mapZoom = 1;
+let annotating = false;
+let annotatePts: Points = {};
+const ANNOTATE_ORDER = [11, 12, 13, 14, 15, 16];
+const ANNOTATE_LABEL: Record<number, string> = {11: '左肩', 12: '右肩', 13: '左肘', 14: '右肘', 15: '左腕', 16: '右腕'};
 const LEVEL: Record<number, string> = {1: 'EASY', 2: 'MEDIUM', 3: 'CHALLENGE'};
+
+/* 参考点缓存：首次打开一幅画时用同一个模型自动识别，之后直接复用 */
+const REF_KEY = 'meet-in-art.refs.v1';
+let refCache: Record<string, Points | null> = {};
+try { refCache = JSON.parse(localStorage.getItem(REF_KEY) || '{}') || {}; } catch {}
+function saveRefs() { try { localStorage.setItem(REF_KEY, JSON.stringify(refCache)); } catch {} }
+for (const id of Object.keys(refCache)) {
+  const w = allArtworks.find(a => a.id === id);
+  const pts = refCache[id];
+  if (w && pts) { w.reference = pts; w.annotated = true; }
+}
 
 const PASSPORT_KEY = 'meet-in-art.passport.v1';
 const passport = loadPassport();
@@ -57,14 +80,17 @@ function toast(message: string) {
 }
 const countryOf = (id: string | undefined) => countries.find(c => c.id === id);
 const worksOf = (id: string) => artworks.filter(w => w.country === id);
+const placesOf = (id: string) => countries.filter(c => c.eraId === id);
+const worksOfEra = (id: string) => artworks.filter(w => countryOf(w.country)?.eraId === id);
 const doneCount = (id: string) => worksOf(id).filter(w => records.some(r => r.artworkId === w.id)).length;
+const isComplete = (id: string) => worksOf(id).length > 0 && doneCount(id) === worksOf(id).length;
 const isDone = (id: string) => records.some(r => r.artworkId === id);
 const workDate = (id: string) => {
   const list = records.filter(r => r.artworkId === id).sort((a, b) => b.savedAt.localeCompare(a.savedAt));
   return list[0] ? new Date(list[0].savedAt).toLocaleDateString('zh-CN') : '';
 };
 const totalDone = () => new Set(records.map(r => r.artworkId)).size;
-const explored = () => countries.filter(c => doneCount(c.id) > 0).length;
+const explored = () => eras.filter(e => worksOfEra(e.id).some(w => isDone(w.id))).length;
 
 function swatches(items: Swatch[]) {
   return items.length ? `<div class="swatches">${items.map(c => `<span class="swatch" style="--color:${c.hex};flex:${Math.max(c.proportion, .04)}" title="${c.hex} · ${Math.round(c.proportion * 100)}%"><i>${Math.round(c.proportion * 100)}%</i></span>`).join('')}</div><div class="color-keys">${items.map(c => `<span>${c.hex}</span>`).join('')}</div>` : '<p class="muted small">图片载入后显示主要颜色</p>';
@@ -87,7 +113,7 @@ function shell(inner: string) {
       <button data-nav="studio" class="${page === 'studio' ? 'on' : ''}">创作室</button>
       <button data-nav="passport" class="${page === 'passport' ? 'on' : ''}">我的护照 <span>${totalDone()}</span></button>
     </nav>
-    <span class="local-badge"><i></i>照片留在你的浏览器</span>
+    <span class="local-badge"><i></i>${aiEnabled ? 'AI 点评时照片会发送' : '照片留在你的浏览器'}</span>
   </header>
   <main id="top">${inner}</main>
   <footer><span>与画相逢 / MEET IN ART</span><p>相似程度只是观察线索，作品的意义由你决定。</p><small>朱昭荣 · 宋琪语<br>艺术与 AI 课程项目 · 2026</small></footer>`;
@@ -97,11 +123,11 @@ function shell(inner: string) {
 
 /* ------------------------------------------------------------------ explore */
 function mapDots() {
-  return countries.map(c => {
+  return placesOf(eraId).map(c => {
     const done = doneCount(c.id);
-    const cls = 'map-dot' + (done === 4 ? ' done' : done > 0 ? ' progress' : '') + (c.id === countryId ? ' selected' : '');
+    const cls = 'map-dot' + (isComplete(c.id) ? ' done' : done > 0 ? ' progress' : '') + (c.id === countryId ? ' selected' : '');
     return `<button class="${cls}" data-country="${c.id}" style="left:${c.dot.x}%;top:${c.dot.y}%" aria-label="${c.name}">
-      ${done === 4 ? '<i class="seal">✳</i>' : ''}<span class="map-dot-label">${c.name}</span></button>`;
+      ${isComplete(c.id) ? '<i class="seal">✳</i>' : ''}<span class="map-dot-label">${c.name}</span></button>`;
   }).join('');
 }
 function artCards(list: Artwork[]) {
@@ -117,9 +143,10 @@ function artCards(list: Artwork[]) {
   </button>`).join('');
 }
 function exploreView() {
+  const era = eraOf(eraId)!;
   const c = countryOf(countryId)!;
   const q = query.trim().toLowerCase();
-  const list = worksOf(c.id).filter(w => {
+  const list = worksOfEra(eraId).filter(w => {
     const okLevel = levelFilter === 0 || w.level === levelFilter;
     const okQuery = !q || w.title.toLowerCase().includes(q) || w.englishTitle.toLowerCase().includes(q) || w.artist.toLowerCase().includes(q);
     return okLevel && okQuery;
@@ -128,12 +155,12 @@ function exploreView() {
   <section class="explore-hero">
     <div>
       <div class="eyebrow"><span class="short-line"></span>艺术 × AI · 一次亲手参与的观看</div>
-      <p>选一个国家，挑一幅名画，用自己的身体、衣服和身边的物品重新演绎它。<br>看见差异，再拍一次，留下你自己的表达。</p>
+      <p>选一个时期，挑一幅人物画，用自己的身体、衣服和身边的物品重新演绎它。<br>看见差异，再拍一次，留下你自己的表达。</p>
     </div>
     <div class="explore-stats">
-      <div><b>${explored()}</b><span>已探索国家</span></div>
+      <div><b>${explored()}</b><span>已探索时期</span></div>
       <div><b>${totalDone()}</b><span>已完成作品</span></div>
-      <div><b>${countries.reduce((n, x) => n + (doneCount(x.id) === 4 ? 1 : 0), 0)}</b><span>国家纪念章</span></div>
+      <div><b>${eras.reduce((n, e) => { const ws = worksOfEra(e.id); return n + (ws.length > 0 && ws.every(w => isDone(w.id)) ? 1 : 0); }, 0)}</b><span>时代纪念章</span></div>
     </div>
   </section>
 
@@ -167,24 +194,28 @@ function exploreView() {
     </div>
     <aside class="country-side">
       <div class="eyebrow">START YOUR JOURNEY</div>
-      <h3>热门目的地</h3>
-      <p class="small muted map-hint">点击圆点或下方国家名切换 · 右上角按钮缩放</p>
-      <div class="country-list">${countries.map(x => `
+      <h3>本时期地点</h3>
+      <p class="small muted map-hint">点击圆点或下方地点切换 · 右上角按钮缩放</p>
+      <div class="country-scroll"><div class="country-list">${placesOf(eraId).map(x => `
         <button class="country-row ${x.id === countryId ? 'on' : ''}" data-country="${x.id}">
           <span class="flag">${x.flag}</span>
-          <span><strong>${x.name}</strong><small>${x.era} · ${doneCount(x.id)}/4</small></span>
-          <em>${doneCount(x.id) === 4 ? '✳' : '↗'}</em>
-        </button>`).join('')}</div>
-      <p class="small muted side-note">完成一幅仿拍，就会在护照里盖下对应的作品印章。集齐一个国家的四幅，解锁国家纪念章。</p>
+          <span><strong>${x.name}</strong><small>${x.era} · ${doneCount(x.id)}/${worksOf(x.id).length}</small></span>
+          <em>${isComplete(x.id) ? '✳' : '↗'}</em>
+        </button>`).join('')}</div></div>
+      <p class="small muted side-note">完成一幅仿拍，就会在护照里盖下对应的作品印章。集齐这个时期的全部作品，解锁时代纪念章。</p>
     </aside>
+  </section>
+
+  <section class="timeline">
+    <div class="timeline-track">${eras.map(e => `<button class="era-chip ${e.id === eraId ? 'on' : ''}" data-era="${e.id}"><span>${e.index}</span>${e.title}</button>`).join('')}</div>
   </section>
 
   <section class="country-block">
     <div class="country-head">
-      <div class="eyebrow">${c.region} · ${c.era}</div>
-      <h2>${c.name}</h2>
-      <p>${c.desc}</p>
-      <p class="small muted">代表艺术家：${c.artists}</p>
+      <div class="eyebrow">${era.en} · ${era.range}</div>
+      <h2>${era.title}</h2>
+      <p>${era.desc}</p>
+      <p class="era-keywords-line">关键词：${era.keywords.join('、')}</p>
     </div>
     <div class="country-tools">
       <input id="artSearch" class="search-input" value="${esc(query)}" placeholder="搜索作品 / 艺术家" aria-label="搜索作品">
@@ -204,11 +235,99 @@ function slot(index: number) {
   const a = attempts[index];
   return `<section class="attempt-card ${active === index ? 'active' : ''}" data-testid="attempt-${index}"><div class="card-head"><button class="text-button attempt-tab" data-slot="${index}" ${busy ? 'disabled' : ''}><span class="dot-number">${index + 1}</span>${index === 0 ? '第一次尝试' : '带着观察，再拍一次'}</button>${a ? `<button class="icon-button mirror" data-slot="${index}" title="水平镜像照片后重新分析" ${busy ? 'disabled' : ''}>⇄ 镜像</button>` : ''}</div><div class="image-stage attempt-stage ${a ? '' : 'empty'}">${a ? `<img src="${a.dataUrl}" alt="${index + 1} 次仿拍照片" class="pose-image"><canvas class="skeleton" data-points="${index}" aria-label="照片中可见的肩肘腕标记"></canvas><span class="provenance">${a.provenance === 'ai-generated' ? 'AI 合成演示素材' : '用户上传照片'}${a.mirrored ? ' · 已镜像' : ''}</span>` : `<div class="upload-hint"><span class="upload-mark">＋</span><strong>${index === 0 ? '把第一次尝试放在这里' : '让新的观察，出现在照片里'}</strong><p>${index === 0 ? '先试着摆一摆，不必一次到位。' : '调整姿态或取景，再上传一张。'}</p></div>`}</div><div class="attempt-actions"><label class="button ${a ? 'subtle' : 'primary'} ${busy ? 'disabled' : ''}"><input type="file" accept="image/jpeg,image/png,image/webp" data-upload="${index}" ${busy ? 'disabled' : ''}>${a ? '更换照片' : '上传照片'} <span>↗</span></label>${art.demo ? `<button class="button ghost demo-single" data-slot="${index}" ${busy ? 'disabled' : ''}>用示例试试</button>` : ''}</div>${a ? `<div class="attempt-palette">${swatches(a.analysis.palette)}</div>` : '<p class="small muted file-hint">JPG / PNG / WebP · 最大 20 MB</p>'}</section>`;
 }
+function reviewSummary(ex?: Extras): string {
+  if (!ex) return '';
+  const bits: string[] = [];
+  if (ex.headDx !== null && ex.headDx !== undefined && Math.abs(ex.headDx) >= 0.03) bits.push(`头部${ex.headDx > 0 ? '偏右' : '偏左'} ${Math.round(Math.abs(ex.headDx) * 100)}%`);
+  if (ex.headTilt !== null && ex.headTilt !== undefined && Math.abs(ex.headTilt) >= 5) bits.push(`头部倾斜 ${Math.round(ex.headTilt)}°`);
+  if (ex.shoulderTilt !== null && ex.shoulderTilt !== undefined && Math.abs(ex.shoulderTilt) >= 4) bits.push(`肩膀${ex.shoulderTilt > 0 ? '右高左低' : '左高右低'} ${Math.round(Math.abs(ex.shoulderTilt))}°`);
+  if (ex.handDelta !== null && ex.handDelta !== undefined && Math.abs(ex.handDelta) >= 0.06) bits.push(ex.handDelta > 0 ? '手离身体更远' : '手更贴近身体');
+  if (ex.dx !== null && Math.abs(ex.dx) >= 0.05) bits.push(`人物整体${ex.dx > 0 ? '偏右' : '偏左'} ${Math.round(Math.abs(ex.dx) * 100)}%`);
+  if (ex.color !== null) bits.push(`配色接近度 ${ex.color}%`);
+  if (!bits.length) return '整体关系已经比较接近参考，可以继续观察光线、材质与自己的表达。';
+  return bits.join('，') + '。';
+}
+
+/** 可替换成真正的 AI 点评：传入结构化特征，返回一段中文评语 */
+async function requestReview(features: {summary: string; metrics: Record<string, unknown>}): Promise<string> {
+  // TODO: 在这里接你的模型，例如：
+  // const r = await fetch('/api/review', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(features)});
+  // return (await r.json()).text;
+  return features.summary;
+}
+(window as any).MeetInArt = {requestReview, reviewSummary};
+
+function toJpeg(src: string, max = 900): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.width * scale);
+      c.height = Math.round(img.height * scale);
+      const ctx = c.getContext('2d')!;
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      resolve(c.toDataURL('image/jpeg', 0.82));
+    };
+    img.onerror = () => reject(new Error('图片读取失败'));
+    img.src = src;
+  });
+}
+async function runAiReview(a: Attempt) {
+  const box = app.querySelector<HTMLElement>('#aiText');
+  if (!box || !a) return;
+  box.textContent = '正在生成点评…';
+  try {
+    const [original, photo] = await Promise.all([toJpeg(art.image, 900), toJpeg(a.dataUrl, 900)]);
+    const ex = a.analysis.extras;
+    const metrics = {
+      poseError: a.analysis.poseError,
+      matched: a.analysis.matched.length,
+      headDx: ex?.headDx ?? null, headDy: ex?.headDy ?? null, headTilt: ex?.headTilt ?? null,
+      shoulderTilt: ex?.shoulderTilt ?? null, handDelta: ex?.handDelta ?? null,
+      positionDx: ex?.dx ?? null, heightRatio: ex?.hRatio ?? null, colorScore: ex?.color ?? null,
+      palette: a.analysis.palette.map(s => s.hex)
+    };
+    const r = await fetch('/api/review', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({original, photo, metrics})
+    });
+    if (!r.ok) throw new Error('AI 点评不可用（' + r.status + '）');
+    const j = await r.json();
+    aiTexts[a.id] = j.text || '模型没有返回内容';
+  } catch (e) {
+    aiTexts[a.id] = 'AI 点评暂不可用，先看本地评语：' + reviewSummary(a.analysis.extras);
+  } finally {
+    aiPending.delete(a.id);
+    if (attempts[active]?.id === a.id) {
+      const live = app.querySelector<HTMLElement>('#aiText');
+      if (live) live.textContent = aiTexts[a.id];
+    }
+  }
+}
+
 function feedback() {
   const a = attempts[active];
   if (!a) return `<div class="feedback-empty"><span class="eyebrow">看见，再调整</span><h3>一些具体的差异，<br>会从一张照片开始。</h3><p>上传照片后，这里会比较手臂姿态、人物位置与主要颜色。你可以采纳建议，也可以保留自己的改编。</p></div>`;
   const r = a.analysis; const bad = ['model-error', 'no-person', 'multiple-people'].includes(r.status);
-  return `<div class="feedback-title"><span class="eyebrow">第 ${active + 1} 次尝试 · 观察反馈</span><h3>${r.status === 'model-error' ? '姿态识别暂不可用' : bad ? '先让画面更清楚' : r.poseError !== null ? '看看哪些地方可以再试一次' : '已有一些可观察的信息'}</h3></div><p class="analysis-note ${bad ? 'warning' : ''}" role="status">${esc(r.reason)}</p><div class="metrics"><div><span>姿态差异</span><strong>${r.poseError === null ? '—' : r.poseError.toFixed(2)}<small>${r.poseError === null ? '' : '肩宽'}</small></strong><p>${art.annotated ? '越小越接近参考姿态' : '未标注参考点'}</p></div><div><span>肩宽占画幅</span><strong>${r.composition ? Math.round(r.composition.scaleRatio * 100) + '%' : '—'}</strong><p>相对于参考原画</p></div><div><span>可比较关键点</span><strong>${r.matched.length}<small>/ 6</small></strong><p>低置信度点不参与</p></div></div><div class="advice-list">${r.advice.length ? r.advice.map((x, i) => `<article class="advice"><span class="advice-number">0${i + 1}</span><div><span class="tag">${x.kind === 'pose' ? '姿态' : '构图'}</span><h4>${esc(x.title)}</h4><p>${esc(x.detail)}</p></div></article>`).join('') : !bad && r.poseError !== null ? '<article class="advice"><span class="advice-number">✓</span><div><h4>当前几何关系比较接近参考</h4><p>可以继续观察光线、道具与自己的表达；无需为了数值反复调整。</p></div></article>' : ''}</div><p class="small muted">人物大小以肩宽近似。骨架点和建议都可能受遮挡与识别误差影响。${r.inferenceMs !== null ? '本次模型推理 ' + Math.round(r.inferenceMs) + ' ms。' : ''}</p>`;
+  const ex = r.extras;
+  const posText = ex && ex.dx !== null ? `${ex.dx > 0 ? '偏右' : '偏左'} ${Math.abs(Math.round(ex.dx * 100))}%` : '—';
+  const sizeText = ex && ex.hRatio !== null ? `${Math.round(ex.hRatio * 100)}%` : '—';
+  const colorText = ex && ex.color !== null ? `${ex.color}%` : '—';
+  const headText = ex && ex.headDx !== null && ex.headDy !== null
+    ? `${Math.abs(ex.headDx) < 0.03 ? '位置接近' : (ex.headDx > 0 ? '偏右 ' : '偏左 ') + Math.round(Math.abs(ex.headDx) * 100) + '%'}${ex.headTilt !== null && Math.abs(ex.headTilt) > 5 ? ` · 倾斜 ${Math.round(ex.headTilt)}°` : ''}`
+    : (ex ? '参考点未包含头部' : '—');
+  const shoulderText = ex && ex.shoulderTilt !== null
+    ? (Math.abs(ex.shoulderTilt) < 4 ? '基本水平' : `${ex.shoulderTilt > 0 ? '右高左低' : '左高右低'} ${Math.round(Math.abs(ex.shoulderTilt))}°`)
+    : '—';
+  const handText = ex && ex.handDelta !== null
+    ? (Math.abs(ex.handDelta) < 0.06 ? '位置接近' : (ex.handDelta > 0 ? '比原画更远离身体' : '比原画更贴近身体'))
+    : '—';
+  const summary = reviewSummary(ex);
+  return `<div class="feedback-title"><span class="eyebrow">第 ${active + 1} 次尝试 · 观察反馈</span>${r.status === 'model-error' ? '<h3>姿态识别暂不可用</h3>' : bad ? '<h3>先让画面更清楚</h3>' : r.poseError !== null ? '<h3>看看哪些地方可以再试一次</h3>' : ''}</div><p class="analysis-note ${bad ? 'warning' : ''}" role="status">${esc(r.reason)}</p><p class="review-line">${summary}</p>${aiEnabled && a ? `<div class="ai-block"><div class="ai-head"><span class="eyebrow">AI 点评${aiModel ? ' · ' + aiModel : ''}</span><button class="text-button" id="aiReview">重新生成</button></div><div class="ai-text" id="aiText">${aiTexts[a.id] || '正在生成点评…'}</div></div>` : ''}<div class="metrics"><div><span>姿态差异</span><strong>${r.poseError === null ? '—' : r.poseError.toFixed(2)}<small>${r.poseError === null ? '' : '肩宽'}</small></strong><p>${art.annotated ? '越小越接近参考姿态' : '未标注参考点'}</p></div><div><span>肩宽占画幅</span><strong>${r.composition ? Math.round(r.composition.scaleRatio * 100) + '%' : '—'}</strong><p>相对于参考原画</p></div><div><span>可比较关键点</span><strong>${r.matched.length}<small>/ 6</small></strong><p>低置信度点不参与</p></div><div><span>人物位置</span><strong>${posText}</strong><p>相对原画中人物</p></div><div><span>人物占比</span><strong>${sizeText}</strong><p>上半身高度对比</p></div><div><span>配色接近度</span><strong>${colorText}</strong><p>主色匹配程度</p></div></div><div class="advice-list">${r.advice.length ? r.advice.map((x, i) => `<article class="advice"><span class="advice-number">0${i + 1}</span><div><span class="tag">${x.kind === 'pose' ? '姿态' : '构图'}</span><h4>${esc(x.title)}</h4><p>${esc(x.detail)}</p></div></article>`).join('') : !bad && r.poseError !== null ? '<article class="advice"><span class="advice-number">✓</span><div><h4>当前几何关系比较接近参考</h4><p>可以继续观察光线、道具与自己的表达；无需为了数值反复调整。</p></div></article>' : ''}</div><p class="small muted">人物大小以肩宽近似。骨架点和建议都可能受遮挡与识别误差影响。${r.inferenceMs !== null ? '本次模型推理 ' + Math.round(r.inferenceMs) + ' ms。' : ''}</p>`;
 }
 function studioView() {
   const both = attempts.every(Boolean);
@@ -224,11 +343,17 @@ function studioView() {
       </div>
       <div class="studio-tools">
         <label class="toggle"><input id="show-points" type="checkbox" ${showPoints ? 'checked' : ''}>显示肩、肘、腕标记</label>
+        <label class="toggle"><input id="show-grid" type="checkbox" ${showGrid ? 'checked' : ''}>构图三分线</label>
         <button class="text-button" data-nav="explore">← 换一幅画</button>
       </div>
     </div>
-    ${art.annotated ? '' : '<p class="notice">这幅画还没有标注参考点，暂不比较姿态。你仍然可以查看观察卡、配色与构图比例；标注后即可启用完整的姿态反馈。</p>'}
-    <div class="studio-grid">
+    ${art.annotated ? '' : `<p class="notice">${annotating
+      ? `手动标注：请按顺序点击画面上的 <b>${ANNOTATE_LABEL[ANNOTATE_ORDER[Object.keys(annotatePts).length] || 11]}</b>（${Object.keys(annotatePts).length}/6）。点错可以撤销。`
+      : '这幅画还没有参考点，暂不比较姿态。可以等自动识别，或手动点 6 个关节；没有参考点时仍可比较配色与观察。'}</p>
+    ${annotating
+      ? '<div class="anno-bar"><button class="text-button" id="annoUndo">撤销一点</button><button class="text-button" id="annoCancel">取消标注</button></div>'
+      : `<div class="anno-bar"><button class="text-button" id="annoStart">手动标注参考点</button>${art.annotated ? '' : '<button class="text-button" id="annoRetry">再试一次自动识别</button>'}</div>`}`}
+    <div class="studio-grid ${showGrid ? 'show-grid' : ''}">
       <aside class="reference-card">
         <div class="card-head"><span class="eyebrow">参考原画 · ${art.annotated ? '人工近似标点' : '待标注参考点'}</span><span class="small muted">${art.englishTitle}</span></div>
         <div class="image-stage reference-stage"><img class="pose-image" src="${art.image}" alt="${art.title}参考原画" data-ref-img><canvas class="skeleton" data-points="reference" aria-label="人工标注的原画关键点"></canvas></div>
@@ -247,15 +372,28 @@ function studioView() {
 /* ------------------------------------------------------------------ passport */
 function passportView() {
   const total = totalDone();
+const stampBlocks = eras.map(e => {
+  const places = placesOf(e.id);
+  const ws = worksOfEra(e.id);
+  const doneN = ws.filter(w => isDone(w.id)).length;
+  const complete = ws.length > 0 && doneN === ws.length;
+  const stamps = ws.map(w => {
+    const done = isDone(w.id);
+    return `<div class="stamp ${done ? 'done' : ''}" title="${w.title}"><b>${w.title.length > 7 ? w.title.slice(0, 7) + '…' : w.title}</b><small>${done ? workDate(w.id) : 'LOCKED'}</small></div>`;
+  }).join('');
+  const placesText = places.map(p => p.zh).join(' · ');
+  return `<div class="stamp-era"><div class="stamp-era-head"><span class="era-index">${e.index}</span><b>${e.title}</b><small>${e.range} · ${doneN}/${ws.length}</small><span class="seal ${complete ? 'on' : ''}">${complete ? 'ERA SEAL ✳' : '未集齐'}</span></div><div class="small muted era-places">${placesText}</div><div class="stamp-grid">${stamps}</div></div>`;
+}).join('');
+
   return `
   <section class="passport-page">
     <div class="explore-hero">
       <div>
         <div class="eyebrow"><span class="short-line"></span>你的旅程 · 你的收藏</div>
         <h1>我的<span>艺术护照</span>。</h1>
-        <p>每完成一幅仿拍，就盖下一枚印章；集齐一个国家的四幅，得到一枚国家纪念章。</p>
+        <p>每完成一幅仿拍，就盖下一枚印章；集齐这个时期的全部作品，得到一枚时代纪念章。</p>
       </div>
-      <div class="explore-stats"><div><b>${explored()}</b><span>已探索国家</span></div><div><b>${total}</b><span>作品印章</span></div><div><b>${countries.reduce((n, x) => n + (doneCount(x.id) === 4 ? 1 : 0), 0)}</b><span>国家纪念章</span></div></div>
+      <div class="explore-stats"><div><b>${explored()}</b><span>已探索时期</span></div><div><b>${total}</b><span>作品印章</span></div><div><b>${eras.reduce((n, e) => { const ws = worksOfEra(e.id); return n + (ws.length > 0 && ws.every(w => isDone(w.id)) ? 1 : 0); }, 0)}</b><span>时代纪念章</span></div></div>
     </div>
     <div class="passport-grid">
       <div>
@@ -275,15 +413,8 @@ function passportView() {
       <div class="passport-body">
         <div class="panel">
           <div class="eyebrow">TRAVEL RECORD</div>
-          <h3>印章收藏 <span class="count">· ${total} / 20</span></h3>
-          ${countries.map(c => `
-            <div class="stamp-country">
-              <div class="stamp-head"><span>${c.flag}</span><b>${c.name}</b><small>${doneCount(c.id)} / 4</small><span class="seal ${doneCount(c.id) === 4 ? 'on' : ''}">${doneCount(c.id) === 4 ? 'COUNTRY SEAL ✳' : '未集齐'}</span></div>
-              <div class="stamp-grid">${worksOf(c.id).map(w => {
-                const done = isDone(w.id);
-                return `<div class="stamp ${done ? 'done' : ''}" title="${w.title}"><b>${w.title.length > 7 ? w.title.slice(0, 7) + '…' : w.title}</b><small>${done ? workDate(w.id) : 'LOCKED'}</small></div>`;
-              }).join('')}</div>
-            </div>`).join('')}
+          <h3>印章收藏 <span class="count">· ${total} / ${artworks.length}</span></h3>
+          ${stampBlocks}
         </div>
         <div class="panel">
           <div class="eyebrow">MY ART GALLERY</div>
@@ -323,7 +454,7 @@ function bindMap() {
       <p class="small muted">${c.artists}</p>
       <p class="tip-desc">${c.desc}</p>
       <div class="tip-thumbs">${worksOf(id).slice(0, 3).map(w => `<button data-tip-art="${w.id}">${thumb(w, 'tiny')}<span>${w.title}</span></button>`).join('')}</div>
-      <div class="tip-foot"><span>${done} / 4 COLLECTED</span><button data-tip-all="${id}">查看全部 ↗</button></div>`;
+      <div class="tip-foot"><span>${done} / ${worksOf(id).length} COLLECTED</span><button data-tip-all="${id}">查看全部 ↗</button></div>`;
     tip.classList.add('show');
     const fr = frame.getBoundingClientRect(), dr = dot.getBoundingClientRect();
     let x = dr.left - fr.left + 18, y = dr.top - fr.top + 16;
@@ -350,6 +481,7 @@ function bindMap() {
   app.querySelector<HTMLElement>('#zoomIn')!.onclick = () => zoom(1.2);
   app.querySelector<HTMLElement>('#zoomOut')!.onclick = () => zoom(.83);
   app.querySelector<HTMLElement>('#zoomReset')!.onclick = () => { mapZoom = 1; app.querySelector<HTMLElement>('#mapPlane')!.style.transform = 'scale(1)'; };
+  for (const b of app.querySelectorAll<HTMLElement>('[data-era]')) b.onclick = () => { eraId = b.dataset.era!; countryId = placesOf(eraId)[0]!.id; render(); };
 }
 function bindGrid() {
   for (const card of app.querySelectorAll<HTMLElement>('[data-art]')) card.onclick = () => selectArtwork(card.dataset.art!);
@@ -396,6 +528,64 @@ function bindStudio() {
   for (const b of app.querySelectorAll<HTMLElement>('.mirror')) b.onclick = () => void run(async () => { const index = Number(b.dataset.slot), a = attempts[index]!; const blob = photoBlob(a.dataUrl); const next = await createAttempt(blob, a.filename, a.provenance, true); next.mirrored = !a.mirrored; attempts[index] = next; active = index; });
   const toggle = app.querySelector<HTMLInputElement>('#show-points');
   if (toggle) toggle.onchange = (e) => { showPoints = (e.target as HTMLInputElement).checked; drawAll(); };
+  const gridToggle = app.querySelector<HTMLInputElement>('#show-grid');
+  if (gridToggle) gridToggle.onchange = (e) => {
+    showGrid = (e.target as HTMLInputElement).checked;
+    drawAll();
+  };
+  const annoStart = app.querySelector<HTMLElement>('#annoStart');
+  if (annoStart) annoStart.onclick = () => { annotating = true; annotatePts = {}; render(); };
+  const annoUndo = app.querySelector<HTMLElement>('#annoUndo');
+  if (annoUndo) annoUndo.onclick = () => { const ids = Object.keys(annotatePts).map(Number); const last = ids[ids.length - 1]; if (last) delete annotatePts[last]; render(); };
+  const annoCancel = app.querySelector<HTMLElement>('#annoCancel');
+  if (annoCancel) annoCancel.onclick = () => { annotating = false; annotatePts = {}; render(); };
+  const annoRetry = app.querySelector<HTMLElement>('#annoRetry');
+  if (annoRetry) annoRetry.onclick = () => { delete refCache[art.id]; saveRefs(); art.annotated = false; render(); void updateReference(); };
+  const aiBtn = app.querySelector<HTMLButtonElement>('#aiReview');
+  if (aiBtn) aiBtn.onclick = () => {
+    const a = attempts[active];
+    if (!a) return;
+    delete aiTexts[a.id];
+    aiPending.add(a.id);
+    void runAiReview(a);
+  };
+  if (aiEnabled) {
+    const a = attempts[active];
+    if (a && !aiTexts[a.id] && !aiPending.has(a.id)) {
+      aiPending.add(a.id);
+      void runAiReview(a);
+    }
+  }
+  if (annotating) {
+    const stage = app.querySelector<HTMLElement>('.reference-stage');
+    if (stage) {
+      stage.classList.add('annotating');
+      stage.onclick = (e) => {
+        const img = stage.querySelector<HTMLImageElement>('.pose-image');
+        if (!img || !img.naturalWidth) return;
+        const rect = stage.getBoundingClientRect();
+        const scale = Math.min(rect.width / img.naturalWidth, rect.height / img.naturalHeight);
+        const w = img.naturalWidth * scale, h = img.naturalHeight * scale;
+        const ox = (rect.width - w) / 2, oy = (rect.height - h) / 2;
+        const x = (e.clientX - rect.left - ox) / w;
+        const y = (e.clientY - rect.top - oy) / h;
+        if (x < 0 || x > 1 || y < 0 || y > 1) return;
+        const id = ANNOTATE_ORDER[Object.keys(annotatePts).length];
+        if (!id) return;
+        annotatePts[id] = {x, y};
+        if (Object.keys(annotatePts).length === 6) {
+          art.reference = {...annotatePts};
+          art.annotated = true;
+          refCache[art.id] = art.reference;
+          saveRefs();
+          annotating = false;
+          annotatePts = {};
+          toast('参考点已保存，可以开始比较姿态了');
+        }
+        render();
+      };
+    }
+  }
   const text = app.querySelector<HTMLTextAreaElement>('#reflection-text');
   if (text) text.oninput = (e) => { reflection = (e.target as HTMLTextAreaElement).value; };
   const pair = app.querySelector<HTMLElement>('#load-pair');
@@ -437,21 +627,138 @@ function drawAll() {
       const frame = canvas.parentElement!.getBoundingClientRect();
       canvas.width = Math.max(1, Math.round(frame.width * 2)); canvas.height = Math.max(1, Math.round(frame.height * 2));
       const ctx = canvas.getContext('2d')!; ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (!showPoints || !image.naturalWidth) return;
+      if (!image.naturalWidth) return;
       const scale = Math.min(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight), w = image.naturalWidth * scale, h = image.naturalHeight * scale, ox = (canvas.width - w) / 2, oy = (canvas.height - h) / 2;
-      const key = canvas.dataset.points!; const points = key === 'reference' ? art.reference : attempts[Number(key)]?.analysis.points || {};
+      if (showGrid) {
+        ctx.strokeStyle = 'rgba(251,223,140,.75)'; ctx.lineWidth = 2;
+        for (const f of [1 / 3, 2 / 3]) {
+          const x = ox + w * f, y = oy + h * f;
+          ctx.beginPath(); ctx.moveTo(x, oy); ctx.lineTo(x, oy + h); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(ox, y); ctx.lineTo(ox + w, y); ctx.stroke();
+        }
+      }
+      if (!showPoints) return;
+      const key = canvas.dataset.points!; const points = key === 'reference' ? (annotating ? annotatePts : art.reference) : attempts[Number(key)]?.analysis.points || {};
       ctx.strokeStyle = key === 'reference' ? '#fbdf8c' : '#9be8e0'; ctx.fillStyle = ctx.strokeStyle; ctx.lineWidth = 3.5; ctx.shadowColor = '#17231a'; ctx.shadowBlur = 4;
       for (const [a, b] of CONNECTIONS) if (reliable(points[a]) && reliable(points[b])) { ctx.beginPath(); ctx.moveTo(ox + points[a]!.x * w, oy + points[a]!.y * h); ctx.lineTo(ox + points[b]!.x * w, oy + points[b]!.y * h); ctx.stroke(); }
       for (const id of [11, 12, 13, 14, 15, 16]) if (reliable(points[id])) { const p = points[id]!; ctx.beginPath(); ctx.arc(ox + p.x * w, oy + p.y * h, 6, 0, Math.PI * 2); ctx.fill(); }
+      if (key === 'reference' && annotating) {
+        ctx.font = 'bold 14px sans-serif'; ctx.fillStyle = '#17231a';
+        ANNOTATE_ORDER.forEach((id, i) => { const p = annotatePts[id]; if (p) ctx.fillText(String(i + 1), ox + p.x * w + 9, oy + p.y * h - 9); });
+      }
     };
     if (image.complete) renderPoints(); else image.addEventListener('load', renderPoints, {once: true});
   }
 }
 function session(): ComparisonSession { return {schemaVersion: 1, id: sessionId, artworkId: art.id, attempts, reflection, savedAt: new Date().toISOString(), modelVersion: MODEL_VERSION, algorithmVersion: ALGORITHM_VERSION}; }
+function pickJoints(pose: {x: number; y: number; visibility?: number}[]): Points {
+  const out: Points = {};
+  for (const i of [11, 12, 13, 14, 15, 16]) {
+    const p = pose[i];
+    if (p && Number.isFinite(p.x) && Number.isFinite(p.y)) out[i] = p;
+  }
+  return out;
+}
+function figureBox(points: Points) {
+  const xs: number[] = [], ys: number[] = [];
+  for (const id of [11, 12, 13, 14, 15, 16]) {
+    const p = points[id];
+    if (p && reliable(p)) { xs.push(p.x); ys.push(p.y); }
+  }
+  if (xs.length < 3) return null;
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  return {cx: (minX + maxX) / 2, cy: (minY + maxY) / 2, h: maxY - minY};
+}
+const rgb = (hex: string) => [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16));
+function colorScore(a: Swatch[], b: Swatch[]): number | null {
+  if (!a.length || !b.length) return null;
+  let total = 0, weight = 0;
+  for (const s of b) {
+    const c = rgb(s.hex);
+    let best = Infinity;
+    for (const t of a) {
+      const d = rgb(t.hex);
+      best = Math.min(best, Math.hypot(c[0] - d[0], c[1] - d[1], c[2] - d[2]));
+    }
+    total += Math.max(0, 1 - best / 441.7) * s.proportion;
+    weight += s.proportion;
+  }
+  return weight > 0 ? Math.round(total / weight * 100) : null;
+}
+function lineAngle(a?: {x: number; y: number}, b?: {x: number; y: number}): number | null {
+  if (!a || !b) return null;
+  const [l, r] = a.x <= b.x ? [a, b] : [b, a];
+  return Math.atan2(r.y - l.y, r.x - l.x) * 180 / Math.PI;
+}
+function angleDelta(a: number | null, b: number | null): number | null {
+  if (a === null || b === null) return null;
+  let d = b - a;
+  while (d > 180) d -= 360;
+  while (d < -180) d += 360;
+  return d;
+}
+function handRatio(p: Points): number | null {
+  const s11 = p[11], s12 = p[12], w = p[15];
+  if (!s11 || !s12 || !w) return null;
+  const cx = (s11.x + s12.x) / 2, cy = (s11.y + s12.y) / 2;
+  const sw = Math.hypot(s11.x - s12.x, s11.y - s12.y);
+  if (sw < 1e-6) return null;
+  return Math.hypot(w.x - cx, w.y - cy) / sw;
+}
+function computeExtras(ref: Points, pts: Points, refPalette: Swatch[], palette: Swatch[]) {
+  const color = colorScore(refPalette, palette);
+  const a = figureBox(ref), b = figureBox(pts);
+  const shoulderTilt = angleDelta(lineAngle(ref[11], ref[12]), lineAngle(pts[11], pts[12]));
+  const headTilt = angleDelta(lineAngle(ref[2], ref[5]), lineAngle(pts[2], pts[5]));
+  const rh = ref[0], ph = pts[0];
+  const hr = handRatio(ref), hp = handRatio(pts);
+  return {
+    dx: a && b ? b.cx - a.cx : null,
+    dy: a && b ? b.cy - a.cy : null,
+    hRatio: a && b && a.h > 0 ? b.h / a.h : null,
+    color,
+    headDx: rh && ph ? ph.x - rh.x : null,
+    headDy: rh && ph ? ph.y - rh.y : null,
+    headTilt,
+    shoulderTilt,
+    handDelta: hr !== null && hp !== null ? hp - hr : null
+  };
+}
 async function updateReference() {
   const id = art.id;
-  try { const c = await canvasFromUrl(art.image); if (art.id !== id) return; art.frame = {width: c.width, height: c.height}; referencePalette = paletteFrom(c); }
-  catch { referencePalette = []; }
+  let canvas: HTMLCanvasElement | null = null;
+  try {
+    canvas = await canvasFromUrl(art.image);
+    if (art.id !== id) return;
+    art.frame = {width: canvas.width, height: canvas.height};
+    referencePalette = paletteFrom(canvas);
+  } catch { referencePalette = []; }
+  if (art.id === id) render();
+
+  if (!canvas || art.annotated) return;
+  if (id in refCache) {
+    const cached = refCache[id];
+    if (cached) { art.reference = cached; art.annotated = true; }
+    if (art.id === id) render();
+    return;
+  }
+  toast('正在用同一模型识别这幅画的参考点…');
+  try {
+    const r = await detect(canvas);
+    if (art.id !== id || art.annotated) return;
+    const pose = r.poses && r.poses[0];
+    const pts = pose ? (Object.fromEntries(pose.map((p, i) => [i, p])) as Points) : null;
+    if (pts && pts[11] && pts[12]) {
+      art.reference = pts; art.annotated = true; refCache[id] = pts;
+      toast('已识别参考点，可以比较姿态了');
+    } else {
+      refCache[id] = null;
+      toast('这幅画没有识别到人物，暂不比较姿态');
+    }
+    saveRefs();
+  } catch {
+    refCache[id] = null; saveRefs();
+  }
   if (art.id === id) render();
 }
 async function createAttempt(blob: Blob, filename: string, provenance: Attempt['provenance'], mirrored = false): Promise<Attempt> {
@@ -465,6 +772,7 @@ async function createAttempt(blob: Blob, filename: string, provenance: Attempt['
       const cmp = comparePose(art.reference, art.frame, points, {width: canvas.width, height: canvas.height});
       analysis = art.annotated ? {...cmp, palette, inferenceMs: result.inferenceMs}
         : {...cmp, status: 'partial', reason: '这幅画还没有标注参考点，暂不比较姿态；配色与观察仍可使用。', poseError: null, composition: null, advice: [], palette, inferenceMs: result.inferenceMs};
+      analysis.extras = computeExtras(art.reference, points, referencePalette, palette);
     }
     analysis.inferenceMs = result.inferenceMs;
   } catch (error) {
@@ -478,6 +786,8 @@ async function run(task: () => Promise<void>) { if (busy) return; busy = true; r
 async function loadDemo(index: number) { const url = art.demo![index]; const r = await fetch(url); if (!r.ok) throw new Error('示例图片缺失，请检查离线素材包。'); attempts[index] = await createAttempt(await r.blob(), url.split('/').pop()!, 'ai-generated'); active = index; }
 
 /* ------------------------------------------------------------------ boot */
+mountSplash();
+fetch('/api/ai-status').then(r => r.json()).then(s => { aiEnabled = !!s.enabled; aiModel = s.model || ''; if (aiEnabled) render(); }).catch(() => {});
 render();
 void updateReference();
 listSessions().then(items => {

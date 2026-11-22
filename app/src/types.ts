@@ -11,11 +11,17 @@ export interface Artwork {
 }
 export interface Swatch { hex: string; proportion: number }
 export interface Advice { kind: 'pose' | 'composition'; title: string; detail: string; joint?: number; magnitude: number }
+export interface Extras {
+  dx: number | null; dy: number | null; hRatio: number | null; color: number | null;
+  headDx?: number | null; headDy?: number | null; headTilt?: number | null;
+  shoulderTilt?: number | null; handDelta?: number | null;
+}
 export interface Analysis {
   status: 'ok' | 'partial' | 'no-person' | 'multiple-people' | 'model-error';
   reason: string; points: Points; matched: number[]; poseError: number | null;
   composition: { dx: number; dy: number; scaleRatio: number } | null;
   advice: Advice[]; palette: Swatch[]; inferenceMs: number | null;
+  extras?: Extras;
 }
 export interface Attempt {
   id: string; dataUrl: string; width: number; height: number; filename: string;

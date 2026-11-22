@@ -194,3 +194,74 @@
   .country-row{padding:9px 0}
 }
 
+
+.metrics>div:nth-child(3n){border-right:0}
+
+.anno-bar{display:flex;gap:16px;flex-wrap:wrap;margin:-6px 0 14px}
+.reference-stage.annotating{cursor:crosshair}
+.reference-stage.annotating::after{content:"";position:absolute;inset:0;background:rgba(251,223,140,.12)}
+
+.focus-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 16px}
+.focus-row>div{border:1px solid var(--line);background:var(--paper);padding:10px 12px}
+.focus-row span{display:block;font-size:9px;letter-spacing:1px;color:var(--muted)}
+.focus-row b{font-size:12px;line-height:1.5;font-weight:500}
+
+.review-line{font-size:13px;line-height:1.95;color:#4a4437;border-left:2px solid var(--red);padding:2px 0 2px 12px;margin:12px 0 0}
+
+
+.ai-block{margin-top:18px;padding-top:14px;border-top:1px dashed var(--line)}
+.ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ai-head .eyebrow{color:#9a5348}
+.ai-head .text-button{font-size:11px}
+.ai-text{margin-top:8px;font-size:13px;line-height:1.95;color:#4a4437}
+.focus-row{margin:16px 0 18px}
+.focus-row b{font-size:12.5px;line-height:1.6}
+
+/* 反馈区字体向左侧观察卡对齐 */
+.feedback-title h3{font-size:21px;line-height:1.7;margin:9px 0 13px}
+.analysis-note{font-size:12px;line-height:1.9;color:#5f695c}
+.review-line{font-size:12px;line-height:1.9;color:#5f695c;border-left:0;padding:0;margin:10px 0 0}
+.ai-text{font-size:12px;line-height:1.9;color:#5f695c}
+.ai-head .text-button{margin-left:auto;font-size:11px}
+.ai-block{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line)}
+
+/* feedback typography: match the observation card */
+.feedback-title h3{font-family:var(--serif);font-size:21px;line-height:1.7;margin:9px 0 13px;font-weight:500}
+.analysis-note{font-size:12px;line-height:1.9;color:#5f695c}
+.review-line{font-size:12px;line-height:1.9;color:#5f695c;border-left:0;padding:0;margin:10px 0 0}
+.ai-block{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line)}
+.ai-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ai-head .eyebrow{color:#9a5348;font-size:11px;font-weight:600}
+.ai-head .text-button{margin-left:auto;font-size:11px;font-weight:400}
+.ai-text{font-size:12px;line-height:1.9;color:#5f695c;font-weight:400;margin-top:8px}
+
+/* era timeline */
+.timeline{margin:6px 0 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0}
+.timeline-track{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.era-chip{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--white);padding:10px 14px;font-size:12px;color:#5f665c;white-space:nowrap;flex:0 0 auto}
+.era-chip span{font-family:Georgia,serif;color:var(--red);font-size:11px}
+.era-chip.on{background:var(--red);border-color:var(--red);color:#fff8ec}
+.era-chip.on span{color:#f7e9d2}
+.era-keywords{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.era-keywords span{font-size:10px;letter-spacing:1px;border:1px solid #d9c9ad;color:#7a6750;padding:4px 9px;border-radius:20px}
+.stamp-era{border-top:1px solid #ebe5d8;padding:14px 0}
+.stamp-era:first-of-type{border-top:0;padding-top:0}
+.stamp-era-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.stamp-era-head .era-index{font-family:Georgia,serif;color:var(--red);font-size:11px}
+.stamp-era-head b{font-family:var(--serif);font-size:16px;font-weight:500}
+.stamp-era-head small{font-size:9px;color:var(--muted)}
+.stamp-era-head .seal{margin-left:auto;font-size:8.5px;letter-spacing:.8px;border:1px solid var(--line);padding:3px 7px;color:#9c8f79}
+.stamp-era-head .seal.on{background:var(--green);border-color:var(--green);color:#f4f0e3}
+.era-places{margin:0 0 10px}
+
+/* era keywords line + scrollable place list */
+.era-keywords-line{margin-top:9px;font-size:12px;line-height:1.8;letter-spacing:.5px;color:#7a6750}
+.country-list{max-height:330px;overflow-y:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:#d6c7ad transparent}
+.country-list::-webkit-scrollbar{width:4px}
+.country-list::-webkit-scrollbar-thumb{background:#d6c7ad;border-radius:4px}
+.country-list::-webkit-scrollbar-track{background:transparent}
+
+/* fixed-height place list with scroll */
+.country-scroll{position:relative;height:292px;margin:2px 0 8px}
+.country-scroll::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22px;background:linear-gradient(to bottom, rgba(255,253,247,0), #fffdf7);pointer-events:none}
+.country-list{height:100%;max-height:none;overflow-y:auto;padding-right:8px;scrollbar-width:thin;scrollbar-color:#d6c7ad transparent}

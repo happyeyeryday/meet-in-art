@@ -1,0 +1,72 @@
+/* ==========================================================================
+   开屏：一段话 + 快门
+   ========================================================================== */
+.splash {
+  position: fixed; inset: 0; z-index: 200; overflow: hidden;
+  display: grid; place-items: center; padding: 6vw;
+  background: radial-gradient(ellipse at 50% 38%, #2b231b 0%, #17120d 55%, #0d0a07 100%);
+  color: #f2e6cf;
+}
+.splash::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35;
+  background-image: radial-gradient(circle at 20% 30%, rgba(255, 240, 210, .06), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(255, 240, 210, .05), transparent 45%);
+}
+.splash-inner { position: relative; z-index: 2; max-width: 760px; width: 100%; }
+.splash-eyebrow { font-size: 10px; letter-spacing: 3.4px; color: #b99c6d; margin-bottom: 28px; }
+.splash-line {
+  font-family: var(--serif); font-size: clamp(19px, 2.5vw, 29px); line-height: 1.95;
+  margin: 0 0 20px; color: #f4e9d4; opacity: 0; transform: translateY(14px);
+  animation: splash-rise .9s cubic-bezier(.2, .7, .3, 1) forwards;
+}
+.splash-line.l1 { animation-delay: .35s; }
+.splash-line.l2 { animation-delay: 1.15s; }
+.splash-line.l3 { animation-delay: 2.05s; color: #e8cf9f; }
+@keyframes splash-rise { to { opacity: 1; transform: none; } }
+.splash-enter {
+  margin-top: 26px; background: transparent; border: 1px solid #b99c6d; color: #f2e6cf;
+  padding: 14px 22px; font-size: 12px; letter-spacing: 2px; cursor: pointer;
+  transition: background .25s, color .25s;
+}
+.splash-enter:hover, .splash-enter:focus-visible { background: #b99c6d; color: #1a1410; }
+.splash-enter span { margin-left: 10px; color: #c98a86; }
+.splash-enter:hover span { color: #7a3a34; }
+.splash-skip {
+  position: absolute; top: 22px; right: 26px; z-index: 4; background: none; border: 0;
+  color: #9d8a6d; font-size: 11px; letter-spacing: 2px; cursor: pointer;
+}
+.splash-skip:hover { color: #f2e6cf; }
+.splash-rec {
+  position: absolute; left: 6vw; bottom: 28px; display: flex; align-items: center; gap: 8px;
+  font-size: 9px; letter-spacing: 2.4px; color: #9d8a6d;
+}
+.splash-rec i { width: 7px; height: 7px; border-radius: 50%; background: #c0392b; animation: splash-blink 1.2s infinite; }
+@keyframes splash-blink { 50% { opacity: .15; } }
+.splash-frame { position: absolute; inset: 20px; z-index: 1; pointer-events: none; }
+.splash-frame i { position: absolute; width: 28px; height: 28px; border: 1px solid rgba(185, 156, 109, .45); }
+.splash-frame i:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.splash-frame i:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.splash-frame i:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.splash-frame i:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+.iris { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+.iris svg { width: 100%; height: 100%; display: block; }
+.iris-hole { transform-box: view-box; transform-origin: 50% 50%; transform: scale(1); transition: transform .5s cubic-bezier(.55, 0, .3, 1); }
+.splash.shooting .iris-hole { transform: scale(0); }
+.iris-blades { transform-box: view-box; transform-origin: 50% 50%; opacity: 0; transition: opacity .18s, transform .5s cubic-bezier(.55, 0, .3, 1); }
+.splash.shooting .iris-blades { opacity: .85; transform: rotate(22deg) scale(.92); }
+.flash { position: absolute; inset: 0; z-index: 7; background: #fff; opacity: 0; pointer-events: none; }
+.splash.shooting .flash { animation: splash-flash .55s .33s ease-out; }
+@keyframes splash-flash { 0% { opacity: 0; } 14% { opacity: .95; } 100% { opacity: 0; } }
+.splash.done { opacity: 0; transition: opacity .55s ease; }
+
+@media (max-width: 700px) {
+  .splash { padding: 9vw 6vw; }
+  .splash-line { font-size: 18px; line-height: 1.85; margin-bottom: 16px; }
+  .splash-enter { width: 100%; text-align: center; }
+  .splash-rec { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-line, .splash-rec i { animation: none; opacity: 1; transform: none; }
+  .blade, .splash.done { transition: none; }
+}
