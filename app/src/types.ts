@@ -33,6 +33,6 @@ export interface ComparisonSession {
   reflection: string; savedAt: string; modelVersion: string; algorithmVersion: string;
 }
 export interface Country {
-  id: string; name: string; zh: string; flag: string; region: string; era: string;
+  id: string; name: string; zh: string; flag: string; region: string; era: string; eraId: string;
   desc: string; artists: string; dot: { x: number; y: number };
 }

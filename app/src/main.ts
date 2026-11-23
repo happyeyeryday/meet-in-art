@@ -10,7 +10,7 @@ import {saveSession, listSessions, removeSession} from './storage.ts';
 import {exportPNG, exportJSON} from './export.ts';
 import {openBook} from './book.ts';
 import {mountSplash} from './splash.ts';
-import type {Artwork, Attempt, ComparisonSession, Points, Swatch, Extras} from './types.ts';
+import type {Artwork, Attempt, ComparisonSession, Points, Swatch, Extras, Analysis} from './types.ts';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 type Page = 'explore' | 'studio' | 'passport';
@@ -35,7 +35,7 @@ let aiEnabled = false, aiModel = '';
 const aiTexts: Record<string, string> = {};
 const aiPending = new Set<string>();
 let records: ComparisonSession[] = [];
-let sessionId = crypto.randomUUID();
+let sessionId: string = crypto.randomUUID();
 let referencePalette: Swatch[] = [];
 let toastTimer: ReturnType<typeof setTimeout>;
 let query = '', levelFilter = 0, mapZoom = 1;
@@ -226,7 +226,7 @@ function exploreView() {
 
   <section class="demo-strip">
     <div class="section-label"><h2><span>DEMO</span> 内置示例</h2><p>三幅带真实参考点与示例照片的作品，用来演示完整流程</p></div>
-    <div class="demo-grid">${demoArtworks.map(w => `<button class="demo-card" data-demo="${w.id}">${thumb(w)}<div><strong>${w.title}</strong><span>${w.artist} · ${w.year}</span><small>AI 合成演示素材</small></div></button>`).join('')}</div>
+    <div class="demo-grid">${allArtworks.filter(w => w.demo).map(w => `<button class="demo-card" data-demo="${w.id}">${thumb(w)}<div><strong>${w.title}</strong><span>${w.artist} · ${w.year}</span><small>AI 合成演示素材</small></div></button>`).join('')}</div>
   </section>`;
 }
 
@@ -317,13 +317,13 @@ function feedback() {
   const posText = ex && ex.dx !== null ? `${ex.dx > 0 ? '偏右' : '偏左'} ${Math.abs(Math.round(ex.dx * 100))}%` : '—';
   const sizeText = ex && ex.hRatio !== null ? `${Math.round(ex.hRatio * 100)}%` : '—';
   const colorText = ex && ex.color !== null ? `${ex.color}%` : '—';
-  const headText = ex && ex.headDx !== null && ex.headDy !== null
-    ? `${Math.abs(ex.headDx) < 0.03 ? '位置接近' : (ex.headDx > 0 ? '偏右 ' : '偏左 ') + Math.round(Math.abs(ex.headDx) * 100) + '%'}${ex.headTilt !== null && Math.abs(ex.headTilt) > 5 ? ` · 倾斜 ${Math.round(ex.headTilt)}°` : ''}`
+  const headText = ex && ex.headDx != null && ex.headDy != null
+    ? `${Math.abs(ex.headDx) < 0.03 ? '位置接近' : (ex.headDx > 0 ? '偏右 ' : '偏左 ') + Math.round(Math.abs(ex.headDx) * 100) + '%'}${ex.headTilt != null && Math.abs(ex.headTilt) > 5 ? ` · 倾斜 ${Math.round(ex.headTilt)}°` : ''}`
     : (ex ? '参考点未包含头部' : '—');
-  const shoulderText = ex && ex.shoulderTilt !== null
+  const shoulderText = ex && ex.shoulderTilt != null
     ? (Math.abs(ex.shoulderTilt) < 4 ? '基本水平' : `${ex.shoulderTilt > 0 ? '右高左低' : '左高右低'} ${Math.round(Math.abs(ex.shoulderTilt))}°`)
     : '—';
-  const handText = ex && ex.handDelta !== null
+  const handText = ex && ex.handDelta != null
     ? (Math.abs(ex.handDelta) < 0.06 ? '位置接近' : (ex.handDelta > 0 ? '比原画更远离身体' : '比原画更贴近身体'))
     : '—';
   const summary = reviewSummary(ex);
@@ -355,8 +355,8 @@ function studioView() {
       : `<div class="anno-bar"><button class="text-button" id="annoStart">手动标注参考点</button>${art.annotated ? '' : '<button class="text-button" id="annoRetry">再试一次自动识别</button>'}</div>`}`}
     <div class="studio-grid ${showGrid ? 'show-grid' : ''}">
       <aside class="reference-card">
-        <div class="card-head"><span class="eyebrow">参考原画 · ${art.annotated ? '人工近似标点' : '待标注参考点'}</span><span class="small muted">${art.englishTitle}</span></div>
-        <div class="image-stage reference-stage"><img class="pose-image" src="${art.image}" alt="${art.title}参考原画" data-ref-img><canvas class="skeleton" data-points="reference" aria-label="人工标注的原画关键点"></canvas></div>
+        <div class="card-head"><span class="eyebrow">参考原画 · ${art.annotated ? '人工或自动识别的参考点' : '待标注参考点'}</span><span class="small muted">${art.englishTitle}</span></div>
+        <div class="image-stage reference-stage"><img class="pose-image" src="${art.image}" alt="${art.title}参考原画" data-ref-img><canvas class="skeleton" data-points="reference" aria-label="原画参考关键点"></canvas></div>
         <div class="observation"><span class="eyebrow">观察卡</span><h3>${art.focus}</h3><p>${art.observation}</p><ul>${art.observations.map(s => `<li>${s}</li>`).join('')}</ul><div class="prop-list">${art.props.map(p => `<span>${p}</span>`).join('')}</div><details><summary>作品与图片来源</summary><p>${art.title} · ${art.artist} · ${art.year}</p><p>${art.license}</p><a href="${art.source}" target="_blank" rel="noreferrer">馆方作品资料 ↗</a><br><a href="${art.imageSource}" target="_blank" rel="noreferrer">数字图来源 ↗</a></details></div>
       </aside>
       <div class="attempts-column">
@@ -495,7 +495,7 @@ function renderGrid() {
   const grid = app.querySelector<HTMLElement>('#artGrid');
   if (!grid) return;
   const q = query.trim().toLowerCase();
-  const list = worksOf(countryId).filter(w => (levelFilter === 0 || w.level === levelFilter) && (!q || w.title.toLowerCase().includes(q) || w.englishTitle.toLowerCase().includes(q) || w.artist.toLowerCase().includes(q)));
+  const list = worksOfEra(eraId).filter(w => (levelFilter === 0 || w.level === levelFilter) && (!q || w.title.toLowerCase().includes(q) || w.englishTitle.toLowerCase().includes(q) || w.artist.toLowerCase().includes(q)));
   grid.innerHTML = artCards(list);
   for (const card of grid.querySelectorAll<HTMLElement>('[data-art]')) card.onclick = () => selectArtwork(card.dataset.art!);
   for (const img of grid.querySelectorAll<HTMLImageElement>('img[data-img]')) watchImage(img);
@@ -762,7 +762,7 @@ async function updateReference() {
   if (art.id === id) render();
 }
 async function createAttempt(blob: Blob, filename: string, provenance: Attempt['provenance'], mirrored = false): Promise<Attempt> {
-  const canvas = await decodePhoto(blob, mirrored); const palette = paletteFrom(canvas); let analysis;
+  const canvas = await decodePhoto(blob, mirrored); const palette = paletteFrom(canvas); let analysis: Analysis;
   try {
     const result = await detect(canvas);
     if (result.poses.length === 0) analysis = emptyAnalysis('no-person', '没有找到清晰的人物。请让一位人物的肩膀和手臂完整入镜，改善光线后再试。');

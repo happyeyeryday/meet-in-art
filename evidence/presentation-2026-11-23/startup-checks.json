@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "date": "2026-11-23",
+  "platform": "posix",
+  "command": "python3 tools/check_startup.py",
+  "checks": [
+    "source launcher builds and serves without node_modules or existing dist",
+    "second launch uses the existing build",
+    "prebuilt launcher works without source, dependencies or build script",
+    "incomplete download exits with a readable error"
+  ],
+  "unitTests": 22,
+  "typecheck": "passed",
+  "assetHashes": "passed",
+  "userPreview": {
+    "url": "http://127.0.0.1:4185/?splash=0",
+    "windowsHttpStatus": 200,
+    "openedInWindowsDefaultBrowser": true
+  }
+}

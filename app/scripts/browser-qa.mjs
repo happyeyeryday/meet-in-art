@@ -11,6 +11,7 @@ const require=createRequire(import.meta.url);
 let chromium,browser,context;
 const result={startedAt:new Date().toISOString(),base,passed:false,checks:[],requests:[],externalRequests:[],pageErrors:[],cases:[],limitation:'Automated browser acceptance does not constitute a human study or performance benchmark.'};
 const check=(name,condition)=>{assert.ok(condition,name);result.checks.push(name);};
+async function chooseDemo(page,id){await page.locator('nav [data-nav="explore"]').click();await page.locator(`[data-demo="${id}"]`).click();}
 async function idle(page){await page.locator('.busy-indicator').waitFor({state:'hidden',timeout:120000});}
 async function download(page,selector,file){const pending=page.waitForEvent('download',{timeout:60000});await page.locator(selector).click();const item=await pending;await item.saveAs(path.join(evidence,file));await idle(page);return readFile(path.join(evidence,file));}
 try{
@@ -24,11 +25,15 @@ try{
  context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true,serviceWorkers:'block'});
  await context.route('**/*',route=>{const request=route.request(),url=request.url();if(!/^https?:/.test(url))return route.continue();result.requests.push({url,method:request.method()});if(new URL(url).origin!==new URL(base).origin){result.externalRequests.push(url);return route.abort();}return route.continue();});
  const page=await context.newPage();page.on('pageerror',e=>result.pageErrors.push(e.message));
- await page.goto(base,{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
- check('three artwork cards',await page.locator('[data-art]').count()===3);
+ await page.goto(base+'/?splash=0',{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
+ check('three demo entries',await page.locator('[data-demo]').count()===3);
+ check('six era tabs',await page.locator('[data-era]').count()===6);
+ await page.locator('#artSearch').fill('兵马俑');check('search covers the whole selected era',await page.locator('#artGrid [data-art="terracotta"]').count()===1);
+ await page.locator('#artSearch').fill('');check('clearing search restores the era catalog',await page.locator('#artGrid [data-art]').count()===4);
+ await page.locator('[data-level="1"]').click();check('difficulty filter retains matching works from all era locations',await page.locator('#artGrid [data-art="terracotta"]').count()===1);await page.locator('[data-level="0"]').click();
  await page.screenshot({path:path.join(evidence,'desktop-initial.png'),fullPage:true});
  for(const id of ['yawning','desperate','fifer']){
-  await page.locator(`[data-art="${id}"]`).click();await page.locator('#load-pair').click();await idle(page);
+  await chooseDemo(page,id);await page.locator('#load-pair').click();await idle(page);
   const data=JSON.parse((await download(page,'#export-json',`${id}.json`)).toString());
   check(`${id}: two AI-labelled examples`,data.attempts.every(a=>a.provenance==='ai-generated'));
   check(`${id}: real valid pose results`,data.attempts.every(a=>a.analysis.status==='ok'&&a.analysis.poseError!==null&&Object.keys(a.analysis.points).length===33&&a.analysis.inferenceMs>=0));
@@ -40,16 +45,26 @@ try{
   result.cases.push({id,statuses:data.attempts.map(a=>a.analysis.status),inferenceMs:data.attempts.map(a=>a.analysis.inferenceMs),poseErrors:data.attempts.map(a=>a.analysis.poseError)});
   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.locator('#toast.visible').waitFor({state:'hidden',timeout:8000});await page.screenshot({path:path.join(evidence,`${id}-desktop.png`),fullPage:true});
  }
- await page.reload({waitUntil:'networkidle'});await page.locator('#records-toggle').click();
- await page.locator('.saved-record').first().waitFor();check('three saved sessions survive reload',await page.locator('.saved-record').count()===3);
- await page.locator('.restore').first().click();check('reflection restored',(await page.locator('#reflection-text').inputValue()).includes('功能验收'));
+ await page.reload({waitUntil:'networkidle'});await page.locator('nav [data-nav="passport"]').click();
+ await page.locator('.gallery-card').first().waitFor();check('three saved sessions survive reload',await page.locator('.gallery-card').count()===3);
+ await page.screenshot({path:path.join(evidence,'passport.png'),fullPage:true});
+ await page.locator('#openBookBtn').click();check('passport opens editable inner pages',await page.locator('.book-page').count()===2);
+ await page.locator('[data-act="add"]').click();check('adding a spread changes page count',(await page.locator('.book-pager').innerText())==='2 / 2');
+ const sticker=await page.locator('.rail-item[data-kind="sticker"]').first().boundingBox();
+ const sheet=await page.locator('.book-page').first().boundingBox();
+ await page.mouse.move(sticker.x+sticker.width/2,sticker.y+sticker.height/2);await page.mouse.down();await page.mouse.move(sheet.x+sheet.width/2,sheet.y+sheet.height/2,{steps:8});await page.mouse.up();
+ check('sticker can be dragged into passport',await page.locator('.book-page .bk-sticker').count()===1);
+ await page.screenshot({path:path.join(evidence,'passport-book.png')});
+ await page.locator('[data-act="close"]').click();await page.reload({waitUntil:'networkidle'});await page.locator('nav [data-nav="passport"]').click();await page.locator('#openBookBtn').click();
+ check('passport layout survives reload',(await page.locator('.book-pager').innerText())==='2 / 2'&&await page.locator('.book-page .bk-sticker').count()===1);await page.locator('[data-act="close"]').click();
+ await page.locator('[data-open]').first().click();check('reflection restored',(await page.locator('#reflection-text').inputValue()).includes('功能验收'));
  await page.locator('.mirror').first().click();await idle(page);
  const mirrored=JSON.parse((await download(page,'#export-json','mirrored.json')).toString());check('mirror reruns real inference',mirrored.attempts[0].mirrored&&mirrored.attempts[0].analysis.status==='ok');
  await page.locator('input[data-upload="0"]').setInputFiles(path.join(root,'public/demo/fifer-after.png'));await idle(page);
  const uploaded=JSON.parse((await download(page,'#export-json','upload.json')).toString());check('file upload runs real inference',uploaded.attempts[0].provenance==='user-upload'&&uploaded.attempts[0].analysis.status==='ok');
  await page.setViewportSize({width:390,height:844});check('mobile has no horizontal overflow',await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
  await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.screenshot({path:path.join(evidence,'mobile.png'),fullPage:true});
- await page.locator('#records-toggle').click();await page.locator('.delete').first().click();await page.waitForFunction(()=>document.querySelectorAll('.saved-record').length===2);result.checks.push('delete saved session');await page.locator('#close-records').click();await page.reload({waitUntil:'networkidle'});await page.locator('#records-toggle').click();await page.locator('.saved-record').first().waitFor();check('deletion survives reload',await page.locator('.saved-record').count()===2);await page.locator('.restore').first().click();
+ await page.locator('nav [data-nav="passport"]').click();await page.locator('[data-del]').first().click();await page.waitForFunction(()=>document.querySelectorAll('.gallery-card').length===2);result.checks.push('delete saved session');await page.reload({waitUntil:'networkidle'});await page.locator('nav [data-nav="passport"]').click();await page.locator('.gallery-card').first().waitFor();check('deletion survives reload',await page.locator('.gallery-card').count()===2);await page.locator('[data-open]').first().click();
  const blank=await page.evaluate(async()=>{const c=document.createElement('canvas');c.width=500;c.height=500;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,500,500);return c.toDataURL('image/png').split(',')[1];});
  await page.locator('input[data-upload="0"]').setInputFiles({name:'blank.png',mimeType:'image/png',buffer:Buffer.from(blank,'base64')});await idle(page);
  const empty=JSON.parse((await download(page,'#export-json','blank.json')).toString());check('no-person photo does not invent pose',empty.attempts[0].analysis.status==='no-person'&&empty.attempts[0].analysis.poseError===null);
@@ -73,11 +88,11 @@ try{
   else if(name==='crop')check('cropped legs cannot yield upper-body comparison',a.status!=='ok'&&a.poseError===null);
   else check(name+' image runs real inference',a.status==='ok'&&a.poseError!==null);
  }
- await page.setViewportSize({width:1440,height:1000});await page.locator('[data-art="desperate"]').click();await page.locator('#load-pair').click();await idle(page);
+ await page.setViewportSize({width:1440,height:1000});await chooseDemo(page,'desperate');await page.locator('#load-pair').click();await idle(page);
  await page.locator('#reflection-text').fill('观察画面。'.repeat(40));check('200-character reflection accepted',(await page.locator('#reflection-text').inputValue()).length===200);await download(page,'#export-png','reflection-200-characters.png');
- await page.locator('#show-points').uncheck();check('overlay toggle clears marker canvas',await page.locator('canvas.skeleton').first().evaluate(c=>!c.getContext('2d').getImageData(0,0,c.width,c.height).data.some(v=>v!==0)));await page.locator('#show-points').check();
+ await page.locator('#show-grid').uncheck();await page.locator('#show-points').uncheck();check('overlay toggle clears marker canvas',await page.locator('canvas.skeleton').first().evaluate(c=>!c.getContext('2d').getImageData(0,0,c.width,c.height).data.some(v=>v!==0)));await page.locator('#show-points').check();
  // Recreate the page/worker before fault injection so the model is not cached in memory.
- await page.route('**/models/pose_landmarker_full.task',route=>route.fulfill({status:404,body:'Missing model test'}));await page.reload({waitUntil:'networkidle'});await page.locator('#load-pair').click();await idle(page);
+ await page.route('**/models/pose_landmarker_full.task',route=>route.fulfill({status:404,body:'Missing model test'}));await page.goto(base+'/?splash=0&page=studio&art=desperate',{waitUntil:'networkidle'});await page.locator('#load-pair').click();await idle(page);
  const failed=JSON.parse((await download(page,'#export-json','missing-model.json')).toString());check('missing model reports failure and still shows palette',failed.attempts.every(a=>a.analysis.status==='model-error'&&a.analysis.poseError===null&&a.analysis.palette.length>0));await page.unroute('**/models/pose_landmarker_full.task');
  check('no outside-origin requests',result.externalRequests.length===0);check('no image upload requests',result.requests.every(r=>r.method==='GET'||r.method==='HEAD'));check('no uncaught page errors',result.pageErrors.length===0);
  result.passed=true;console.log('Browser checks passed:',result.checks.length);

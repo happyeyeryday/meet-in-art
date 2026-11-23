@@ -1,0 +1,226 @@
+{
+  "passed": true,
+  "checks": [
+    "splash can be skipped",
+    "all 42 catalog images decode",
+    "unconfigured online review stays disabled",
+    "mock endpoint rejects missing images",
+    "review automatically sends resized original, photo and metrics when enabled",
+    "mock review is displayed and explicitly labelled",
+    "no uncaught errors in supplemental flows"
+  ],
+  "catalog": [
+    {
+      "id": "fayum",
+      "width": 318,
+      "height": 552
+    },
+    {
+      "id": "pompeii",
+      "width": 567,
+      "height": 561
+    },
+    {
+      "id": "terracotta",
+      "width": 411,
+      "height": 575
+    },
+    {
+      "id": "theodora",
+      "width": 1037,
+      "height": 777
+    },
+    {
+      "id": "emperors",
+      "width": 527,
+      "height": 777
+    },
+    {
+      "id": "shunoku",
+      "width": 407,
+      "height": 626
+    },
+    {
+      "id": "monalisa",
+      "width": 654,
+      "height": 1024
+    },
+    {
+      "id": "redturban",
+      "width": 440,
+      "height": 593
+    },
+    {
+      "id": "durer",
+      "width": 562,
+      "height": 780
+    },
+    {
+      "id": "innocent",
+      "width": 652,
+      "height": 780
+    },
+    {
+      "id": "blueboy",
+      "width": 532,
+      "height": 782
+    },
+    {
+      "id": "pompadour",
+      "width": 603,
+      "height": 777
+    },
+    {
+      "id": "xiaozhuang",
+      "width": 765,
+      "height": 773
+    },
+    {
+      "id": "mughal",
+      "width": 372,
+      "height": 651
+    },
+    {
+      "id": "desperate",
+      "width": 1500,
+      "height": 1228
+    },
+    {
+      "id": "parasol",
+      "width": 625,
+      "height": 778
+    },
+    {
+      "id": "gaoyong",
+      "width": 285,
+      "height": 772
+    },
+    {
+      "id": "soldier",
+      "width": 1038,
+      "height": 780
+    },
+    {
+      "id": "jeanne",
+      "width": 606,
+      "height": 782
+    },
+    {
+      "id": "frida",
+      "width": 590,
+      "height": 781
+    },
+    {
+      "id": "father",
+      "width": 542,
+      "height": 778
+    },
+    {
+      "id": "vase",
+      "width": 1038,
+      "height": 777
+    },
+    {
+      "id": "christ",
+      "width": 342,
+      "height": 652
+    },
+    {
+      "id": "kubilai",
+      "width": 535,
+      "height": 697
+    },
+    {
+      "id": "ife",
+      "width": 535,
+      "height": 733
+    },
+    {
+      "id": "maya",
+      "width": 1062,
+      "height": 773
+    },
+    {
+      "id": "urbino",
+      "width": 997,
+      "height": 782
+    },
+    {
+      "id": "castiglione",
+      "width": 615,
+      "height": 762
+    },
+    {
+      "id": "arnolfini",
+      "width": 567,
+      "height": 777
+    },
+    {
+      "id": "durer2",
+      "width": 777,
+      "height": 778
+    },
+    {
+      "id": "meninas",
+      "width": 673,
+      "height": 778
+    },
+    {
+      "id": "nightwatch",
+      "width": 1040,
+      "height": 778
+    },
+    {
+      "id": "charles1",
+      "width": 597,
+      "height": 777
+    },
+    {
+      "id": "strawhat",
+      "width": 555,
+      "height": 776
+    },
+    {
+      "id": "lavoisier",
+      "width": 582,
+      "height": 778
+    },
+    {
+      "id": "ancestor",
+      "width": 472,
+      "height": 727
+    },
+    {
+      "id": "charles4",
+      "width": 918,
+      "height": 772
+    },
+    {
+      "id": "moitessier",
+      "width": 778,
+      "height": 778
+    },
+    {
+      "id": "vangogh",
+      "width": 633,
+      "height": 773
+    },
+    {
+      "id": "kahnweiler",
+      "width": 552,
+      "height": 781
+    },
+    {
+      "id": "yawning",
+      "width": 300,
+      "height": 390
+    },
+    {
+      "id": "fifer",
+      "width": 600,
+      "height": 1030
+    }
+  ],
+  "realRemoteModelTested": false,
+  "note": "No API key used. Online review exercised only in explicit AI_MOCK mode."
+}

@@ -1,0 +1,1918 @@
+{
+  "startedAt": "2026-11-23T11:28:01.865Z",
+  "base": "http://127.0.0.1:4185",
+  "passed": true,
+  "checks": [
+    "three demo entries",
+    "six era tabs",
+    "search covers the whole selected era",
+    "clearing search restores the era catalog",
+    "difficulty filter retains matching works from all era locations",
+    "yawning: two AI-labelled examples",
+    "yawning: real valid pose results",
+    "yawning: max three suggestions",
+    "yawning: PNG export dimensions",
+    "desperate: two AI-labelled examples",
+    "desperate: real valid pose results",
+    "desperate: max three suggestions",
+    "desperate: PNG export dimensions",
+    "fifer: two AI-labelled examples",
+    "fifer: real valid pose results",
+    "fifer: max three suggestions",
+    "fifer: PNG export dimensions",
+    "three saved sessions survive reload",
+    "passport opens editable inner pages",
+    "adding a spread changes page count",
+    "sticker can be dragged into passport",
+    "passport layout survives reload",
+    "reflection restored",
+    "mirror reruns real inference",
+    "file upload runs real inference",
+    "mobile has no horizontal overflow",
+    "delete saved session",
+    "deletion survives reload",
+    "no-person photo does not invent pose",
+    "corrupt upload reports error",
+    "corrupt upload preserves previous attempt",
+    "large.jpg validation",
+    "unsupported.heic validation",
+    "tiny photo rejected",
+    "jpeg image runs real inference",
+    "webp image runs real inference",
+    "multiple people rejected",
+    "cropped legs cannot yield upper-body comparison",
+    "200-character reflection accepted",
+    "overlay toggle clears marker canvas",
+    "missing model reports failure and still shows palette",
+    "no outside-origin requests",
+    "no image upload requests",
+    "no uncaught page errors"
+  ],
+  "requests": [
+    {
+      "url": "http://127.0.0.1:4185/?splash=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/style.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pages.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/main.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/artworks.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/countries.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/eras.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/world.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/analysis.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/images.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/palette.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/detector.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/storage.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/export.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/sync.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/quantizers/mmcq.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/pipeline.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/region.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/swatches.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/loaders/canvas-utils.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color-space.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/api/ai-status",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/CJK.ttf",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pose.worker.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_bundle.mjs",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.wasm",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/models/pose_landmarker_full.task",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/yawning-before.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/yawning-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-before.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/fifer-before.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/fifer-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/?splash=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/style.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pages.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/main.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/artworks.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/countries.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/eras.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/world.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/analysis.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/images.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/palette.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/detector.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/storage.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/export.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/sync.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/quantizers/mmcq.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/pipeline.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/region.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/swatches.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/loaders/canvas-utils.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color-space.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/api/ai-status",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/CJK.ttf",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/theodora.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/emperors.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/shunoku.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/monalisa.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/redturban.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/durer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/innocent.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/blueboy.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompadour.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/xiaozhuang.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/mughal.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/parasol.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/gaoyong.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/soldier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/jeanne.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/frida.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/father.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/christ.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/kubilai.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/ife.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/maya.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/urbino.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/castiglione.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/arnolfini.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/durer2.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/meninas.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/nightwatch.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/charles1.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/strawhat.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/lavoisier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/ancestor.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/charles4.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/moitessier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vangogh.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/kahnweiler.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/book-desk.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/?splash=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/style.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pages.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/main.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/artworks.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/countries.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/eras.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/world.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/analysis.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/images.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/palette.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/detector.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/storage.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/export.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/sync.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/quantizers/mmcq.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/pipeline.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/region.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/swatches.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/loaders/canvas-utils.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color-space.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/api/ai-status",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/CJK.ttf",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/theodora.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/emperors.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/shunoku.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/monalisa.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/redturban.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/durer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/innocent.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/blueboy.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompadour.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/xiaozhuang.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/mughal.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/parasol.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/gaoyong.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/soldier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/jeanne.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/frida.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/father.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/christ.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/kubilai.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/ife.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/maya.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/urbino.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/castiglione.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/arnolfini.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/durer2.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/meninas.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/nightwatch.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/charles1.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/strawhat.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/lavoisier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/ancestor.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/charles4.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/moitessier.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vangogh.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/kahnweiler.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/book-desk.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pose.worker.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_bundle.mjs",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.wasm",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/models/pose_landmarker_full.task",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/?splash=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/style.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pages.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/main.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/artworks.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/countries.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/eras.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/world.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/analysis.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/images.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/palette.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/detector.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/storage.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/export.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/sync.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/quantizers/mmcq.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/pipeline.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/region.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/swatches.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/loaders/canvas-utils.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color-space.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/api/ai-status",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/CJK.ttf",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pose.worker.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_bundle.mjs",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.wasm",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/models/pose_landmarker_full.task",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/fifer-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fayum.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/pompeii.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/terracotta.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/vase.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/yawning.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/fifer.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-before.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/?splash=0&page=studio&art=desperate",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/style.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pages.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.css?v=9",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/main.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/artworks.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/countries.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/eras.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/world.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/analysis.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/images.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/palette.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/detector.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/storage.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/export.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/book.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/splash.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/sync.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/quantizers/mmcq.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/pipeline.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/region.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/swatches.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/loaders/canvas-utils.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/vendor/colorthief/color-space.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/api/ai-status",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/CJK.ttf",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-before.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/src/pose.worker.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_bundle.mjs",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/wasm/vision_wasm_module_internal.wasm",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/demo/desperate-after.png",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:4185/artworks/desperate.jpg",
+      "method": "GET"
+    }
+  ],
+  "externalRequests": [],
+  "pageErrors": [],
+  "cases": [
+    {
+      "id": "yawning",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        69.09999999403954,
+        54.1000000089407
+      ],
+      "poseErrors": [
+        1.4821109155657872,
+        0.9832443929490184
+      ]
+    },
+    {
+      "id": "desperate",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        48,
+        39.5
+      ],
+      "poseErrors": [
+        0.8870485607184266,
+        0.2892499561660754
+      ]
+    },
+    {
+      "id": "fifer",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        47.70000000298023,
+        44.80000001192093
+      ],
+      "poseErrors": [
+        0.6957321129145735,
+        0.676829998465746
+      ]
+    }
+  ],
+  "limitation": "Automated browser acceptance does not constitute a human study or performance benchmark.",
+  "browserVersion": "146.0.7680.80",
+  "offlineIsolation": "Fresh context and empty browser cache; HTTP/S proxy to unused local port 9, bypassing only localhost; external-origin routes aborted; local CSP connect-src self.",
+  "finishedAt": "2026-11-23T11:28:45.214Z"
+}

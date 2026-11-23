@@ -1,0 +1,14 @@
+{
+  "pptxSlides": 17,
+  "pdfPages": 17,
+  "pdfRenderer": "Microsoft PowerPoint 2024",
+  "sourcePptxUnchanged": true,
+  "xmlAndZipValid": true,
+  "localDocumentLinksValid": true,
+  "pdfHasExpectedText": true,
+  "sha256": {
+    "与画相逢-作业介绍.pptx": "b40332d823bbe0e05becdafe0447842c99207fac8a4740e1a90b74a7e41ae2a8",
+    "与画相逢-作业介绍.pdf": "cda5b206a7b0cc225a3c9d737d0c89897f8375ab14e067531e66573f24cb3cc9"
+  },
+  "visualReview": "All 17 exported PDF pages reviewed in a contact sheet; no missing pictures or obvious clipped text."
+}

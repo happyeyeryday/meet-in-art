@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-23",
+  "pulledCommit": "de904448bb949200a444227367a57f2bf0c151de",
+  "previousCommit": "acee942db93649ff86b0b70bf9e65e83064efea6",
+  "localFixesNotCommitted": true,
+  "catalog": {
+    "exploration": 40,
+    "standaloneDemo": 2,
+    "total": 42,
+    "eras": 6,
+    "placeEraNodes": 24
+  },
+  "build": "passed",
+  "typecheck": "passed after local corrections",
+  "unitTests": {
+    "passed": 22,
+    "method": "in-process imports of analysis, palette and assets test modules"
+  },
+  "browserChecks": 44,
+  "supplementalChecks": [
+    "splash can be skipped",
+    "all 42 catalog images decode",
+    "unconfigured online review stays disabled",
+    "mock endpoint rejects missing images",
+    "review automatically sends resized original, photo and metrics when enabled",
+    "mock review is displayed and explicitly labelled",
+    "no uncaught errors in supplemental flows"
+  ],
+  "runtimeManifest": "SHA-256 passed",
+  "envPackaging": "synthetic .env and .env.local excluded; .env.example included",
+  "realOnlineReviewTested": false,
+  "existingDeliverables": "v1.0.3 packages and report/PPT/video predate map/passport changes; not regenerated this turn"
+}

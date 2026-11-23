@@ -17,6 +17,7 @@ __pycache__/
 /archive/
 /evidence/history/
 /evidence/recording/*.webm
+/evidence/presentation-*/preview/
 /evidence/unpacked-browser/*
 !/evidence/unpacked-browser/acceptance.json
 /evidence/release-archives.json

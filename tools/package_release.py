@@ -9,6 +9,7 @@ def pack(name,entries):
     target=OUT/(name+'.zip');manifest=[]
     with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         for p,relative in sorted(entries,key=lambda item:item[1]):
+            if p.name=='.env' or (p.name.startswith('.env.') and p.name!='.env.example'):continue
             data=p.read_bytes();manifest.append({'path':relative,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()});z.writestr(name+'/'+relative,data)
         z.writestr(name+'/PACKAGE_MANIFEST.json',json.dumps({'kind':name,'files':manifest},ensure_ascii=False,indent=2)+'\n')
     with zipfile.ZipFile(target) as z:assert z.testzip() is None
@@ -20,12 +21,14 @@ if not __import__('sys').argv[1:] or '--demo' in __import__('sys').argv:
     demo=[(p,str(p.relative_to(ROOT))) for p in (ROOT/'app/dist').rglob('*') if p.is_file()]
     demo.extend((ROOT/'app'/p,'app/'+p) for p in ['scripts/start-demo.mjs','scripts/serve.mjs','scripts/check-assets.mjs','scripts/asset-manifest.mjs','package.json','start-demo.sh','start-demo.bat'])
     demo.append((OUT/'离线演示_启动说明.txt','README.txt'))
+    if (ROOT/'app/.env.example').is_file():demo.append((ROOT/'app/.env.example','app/.env.example'))
     artifacts.append(pack('入画_离线演示包',demo))
 if not __import__('sys').argv[1:] or '--course' in __import__('sys').argv:
     entries=[]
     for directory in ['app','deliverables','evidence','tools','.github']:
         for p in (ROOT/directory).rglob('*'):
             if not p.is_file() or set(p.parts)&{'node_modules','__pycache__','.git','history'} or p.suffix in {'.zip','.pyc'}:continue
+            if p.name=='.env' or (p.name.startswith('.env.') and p.name!='.env.example'):continue
             if p.parent==ROOT/'evidence/recording' and p.suffix=='.webm':continue
             if p.name in {'release-archives.json','SHA256SUMS.txt'}:continue
             if p.parent==ROOT/'evidence/unpacked-browser' and p.name!='acceptance.json':continue

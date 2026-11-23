@@ -82,7 +82,7 @@ const SIZE: Record<ItemKind, number> = {photo: 36, original: 30, stamp: 20, seal
 /* ---------------- 渲染 ---------------- */
 function visual(item: BookItem): string {
   if (item.kind === 'photo') {
-    const s = ctx.records.find(r => r.id === item.ref) || ctx.records[0];
+    const s = ctx.records.find(r => r.id === item.ref);
     if (!s) return '<div class="bk-missing">照片已删除</div>';
     return `<img src="${photoOf(s)}" alt="">`;
   }

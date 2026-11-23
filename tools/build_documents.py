@@ -3,6 +3,9 @@ import json, html, re
 from document_engine import PDF,pptx,text,rect,image,wrap,ROOT,PAPER,INK,RED,MUTED
 
 OUT=ROOT/'deliverables';OUT.mkdir(exist_ok=True)
+# This script reproduces the original 2026-11-02 deck. The current manually
+# authored presentation is exported with tools/export_presentation.ps1.
+SLIDES_OUT=OUT/'archive/2026-11-02';SLIDES_OUT.mkdir(parents=True,exist_ok=True)
 data=json.loads((OUT/'report-source.json').read_text())
 PUBLIC=ROOT/'app/public';ART=PUBLIC/'artworks';DEMO=PUBLIC/'demo'
 
@@ -56,9 +59,9 @@ p=slide('让每条反馈，都能回到画面里',12)
 p.extend([text('已经留下',44,149,380,19,RED),text('网页源码与构建版本\n参考点、观察卡和演示素材\n测试记录、报告与可编辑 PPT\n完整离线包、真实录屏与试用表',44,195,400,18,INK,1.9),text('下一步研究',520,149,380,19,RED),text('邀请真人完成两次拍摄\n记录建议的理解与采用\n改进遮挡与透视情况下的反馈\n检验是否促进了具体观察',520,195,380,18,INK,1.9),text('相似程度是观察线索。你自己的选择，也属于这幅作品。',44,450,870,18,RED)])
 slides.append(p)
 
-(OUT/'slides-source.json').write_text(json.dumps(slides,ensure_ascii=False,indent=2)+'\n')
-PDF().write(slides,OUT/'答辩演示_最终版.pdf',960,540)
-pptx(slides,OUT/'答辩演示_最终版.pptx')
+(SLIDES_OUT/'slides-source.json').write_text(json.dumps(slides,ensure_ascii=False,indent=2)+'\n')
+PDF().write(slides,SLIDES_OUT/'答辩演示_最终版.pdf',960,540)
+pptx(slides,SLIDES_OUT/'答辩演示_最终版.pptx')
 
 # Report pagination: text uses real embedded Unicode glyphs; selectable/searchable.
 pages=[];page=[];y=0
