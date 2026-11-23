@@ -1,0 +1,104 @@
+{
+  "sourceCommit": "874ab8cd967fbcfacd6e4e7133397b42e3132b88",
+  "method": "git archive into a new temporary directory; bash app/start-demo.sh auto-builds; then browser-qa.mjs with all non-local requests blocked",
+  "noNodeModules": true,
+  "noExistingDistBeforeLaunch": true,
+  "noApiConfiguration": true,
+  "passed": true,
+  "browserVersion": "146.0.7680.80",
+  "checks": [
+    "three demo entries",
+    "six era tabs",
+    "search covers the whole selected era",
+    "clearing search restores the era catalog",
+    "difficulty filter retains matching works from all era locations",
+    "yawning: two AI-labelled examples",
+    "yawning: real valid pose results",
+    "yawning: max three suggestions",
+    "yawning: PNG export dimensions",
+    "desperate: two AI-labelled examples",
+    "desperate: real valid pose results",
+    "desperate: max three suggestions",
+    "desperate: PNG export dimensions",
+    "fifer: two AI-labelled examples",
+    "fifer: real valid pose results",
+    "fifer: max three suggestions",
+    "fifer: PNG export dimensions",
+    "three saved sessions survive reload",
+    "passport opens editable inner pages",
+    "adding a spread changes page count",
+    "sticker can be dragged into passport",
+    "passport layout survives reload",
+    "reflection restored",
+    "mirror reruns real inference",
+    "file upload runs real inference",
+    "mobile has no horizontal overflow",
+    "delete saved session",
+    "deletion survives reload",
+    "no-person photo does not invent pose",
+    "corrupt upload reports error",
+    "corrupt upload preserves previous attempt",
+    "large.jpg validation",
+    "unsupported.heic validation",
+    "tiny photo rejected",
+    "jpeg image runs real inference",
+    "webp image runs real inference",
+    "multiple people rejected",
+    "cropped legs cannot yield upper-body comparison",
+    "200-character reflection accepted",
+    "overlay toggle clears marker canvas",
+    "missing model reports failure and still shows palette",
+    "no outside-origin requests",
+    "no image upload requests",
+    "no uncaught page errors"
+  ],
+  "externalRequestCount": 0,
+  "pageErrors": [],
+  "cases": [
+    {
+      "id": "yawning",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        72.70000000298023,
+        52.8999999910593
+      ],
+      "poseErrors": [
+        1.4821109155657872,
+        0.9832443929490184
+      ]
+    },
+    {
+      "id": "desperate",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        64.90000000596046,
+        57.5
+      ],
+      "poseErrors": [
+        0.8870485607184266,
+        0.2892499561660754
+      ]
+    },
+    {
+      "id": "fifer",
+      "statuses": [
+        "ok",
+        "ok"
+      ],
+      "inferenceMs": [
+        79.20000000298023,
+        38.599999994039536
+      ],
+      "poseErrors": [
+        0.6957321129145735,
+        0.676829998465746
+      ]
+    }
+  ]
+}
